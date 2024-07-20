@@ -3,15 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './styles/vendor/fontawesome-free/css/all.min.css';
-import './styles/vendor/bootstrap/css/bootstrap.min.css';
-import './styles/css/ruang-admin.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+
     <App />
   </React.StrictMode>
 );
