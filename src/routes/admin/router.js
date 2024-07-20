@@ -3,10 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import Header from '../../layouts/admin/component/Header';
 import Home from '../../pages/admin/home/Home';
 import Footer from '../../layouts/admin/component/Footer';
-// import InsertCate from '../../pages/admin/categories/InsertCate';
+import InsertCate from '../../pages/admin/caterories/InsertCate';
 import Menu from '../../layouts/admin/component/Menu';
-// import ListCate from '../../pages/admin/categories/ListCate';
-
+import ListCate from '../../pages/admin/caterories/ListCate'
 const AppRouterAdmin = () => {
   return (
     <div id="wrapper">
@@ -16,8 +15,8 @@ const AppRouterAdmin = () => {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/insert/cate" element={<InsertCate />} />
-            <Route path="/list/cate" element={<ListCate />} /> */}
+            <Route path="/insert/cate" element={<InsertCate />} />
+            <Route path="/list/cate" element={<ListCate />} />
           </Routes>
         </div>
         <Footer />
