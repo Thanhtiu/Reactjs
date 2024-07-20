@@ -57,7 +57,7 @@ function Menu() {
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
                         <h6 className="collapse-header">Quản lý sản phẩm</h6>
-                        <Link className="collapse-item" to="../admin/products/insert.html">Thêm sản phẩm</Link>
+                        <a className="collapse-item" href="../admin/products/insert.html">Thêm sản phẩm</a>
                         <a className="collapse-item" href="../admin/products/list.html">Danh sách</a>
                     </div>
                 </div>
@@ -74,8 +74,8 @@ function Menu() {
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
                         <h6 className="collapse-header">Quản lý khách hàng</h6>
-                        <a className="collapse-item" href="../admin/customers/insert.html">Thêm khách hàng</a>
-                        <a className="collapse-item" href="../admin/customers/list.html">Danh sách khách hàng</a>
+                        <Link to='/admin/customers/insert' className="collapse-item">Thêm khách hàng</Link>
+                        <Link to='/admin/customers/list' className="collapse-item">Danh sách khách hàng</Link>
                     </div>
                 </div>
             </li>

@@ -3,6 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import Header from '../../layouts/admin/component/Header';
 import Home from '../../pages/admin/home/Home';
 import Footer from '../../layouts/admin/component/Footer';
+import InsertCate from '../../pages/admin/caterories/InsertCate';
+import InsertCustomers from '../../pages/admin/customers/InsertCustomers';
+import EditCustomer from '../../pages/admin/customers/EditCustomer';
+import CustomerList from '../../pages/admin/customers/CustomerList';
 import Menu from '../../layouts/admin/component/Menu';
 // import ListCate from '../../pages/admin/categories/ListCate';
 import '../../assets/admin/styles/vendor/fontawesome-free/css/all.min.css';
@@ -22,8 +26,11 @@ const AppRouterAdmin = () => {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/cate/insert" element={<InsertCate />} />
-            <Route path="/cate/list" element={<ListCate />} />
+            <Route path="/insert/cate" element={<InsertCate />} />
+            <Route path="/list/cate" element={<ListCate />} />
+            <Route path="/customers/insert" element={<InsertCustomers />} />
+            <Route path="/customers/edit/:id" element={<EditCustomer />} />
+            <Route path="/customers/list" element={<CustomerList />} />
           </Routes>
         </div>
         <Footer />
