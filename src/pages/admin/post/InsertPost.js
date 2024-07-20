@@ -5,7 +5,7 @@ function InsertPost() {
         <div className='row m-auto'>
             <div className='col-lg-12'>
                 <div className='card'>
-                    <div className='card-header'>Thêm bài viết</div>
+                    <div className='card-header'>Thêm bài đăng</div>
                     <div className='card-body'>
                         <form className='form' enctype="multipart/form-data">
                             <div className='row'>
@@ -22,7 +22,7 @@ function InsertPost() {
                                     <input type='file' className='form-control' id="audio" name="audio" />
                                 </div>
                                 <div className='col-sm-3'>
-                                    <label>Audio</label>
+                                    <label>Loại</label>
                                     <select className='col-12 form-control' name="categories_id" id="categories_id">
                                         <option>Vui lòng chọn loại!</option>
                                         <option>Loại 1</option>
@@ -36,7 +36,7 @@ function InsertPost() {
                                 </div>
                             </div>
                             <div className='text-end mt-3'>
-                                <button type="button" id="btn" className='btn btn-success'>Thêm</button>
+                                <button type="button" id="btn" className='btn btn-success'><i class="bi bi-plus"></i>Thêm</button>
                             </div>
                         </form>
                     </div>
