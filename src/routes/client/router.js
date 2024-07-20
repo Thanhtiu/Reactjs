@@ -1,18 +1,19 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import BrowserRouter từ react-router-dom
-import Header from '../../layouts/client/component/Header'; // Đảm bảo import các component khác cũng đúng
+import { Routes, Route } from 'react-router-dom';
+import Header from '../../layouts/client/component/Header';
 import Home from '../../pages/client/home/Home';
 import About from '../../pages/client/about/About';
+
 const AppRouter = () => {
   return (
-    <BrowserRouter>
-    <Header/>
+    <>
+      <Header />
       <Routes>
-        <Route path="/client" element={<Home />} />
-        <Route path="/client/about" element={<About/>}/>
-        {/* Định nghĩa các Route khác tại đây */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        {/* Add more routes here */}
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
