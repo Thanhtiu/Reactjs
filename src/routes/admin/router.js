@@ -16,7 +16,8 @@ import '../../assets/admin/styles/css/ruang-admin.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
-
+import InsertPost from '../../pages/admin/post/InsertPost';
+import ListPost from '../../pages/admin/post/ListPost';
 const AppRouterAdmin = () => {
   return (
     <div id="wrapper">
@@ -32,7 +33,8 @@ const AppRouterAdmin = () => {
             <Route path="/customers/edit/:id" element={<EditCustomer />} />
             <Route path="/customers/list" element={<CustomerList />} />
             <Route path="/comment/list" element={<CommentList />} />
-            
+            <Route path="/insert/post" element={<InsertPost />} />
+            <Route path="/list/post" element={<ListPost />} />
           </Routes>
         </div>
         <Footer />

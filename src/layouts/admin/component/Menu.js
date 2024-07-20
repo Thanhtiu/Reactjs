@@ -51,14 +51,14 @@ function Menu() {
                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseForm"
                     aria-expanded="false" aria-controls="collapseForm">
                     <i className="bi bi-box2-fill"></i>
-                    <span>Sản phẩm</span>
+                    <span>Bài đăng</span>
                 </a>
                 <div id="collapseForm" className="collapse" aria-labelledby="headingForm"
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
-                        <h6 className="collapse-header">Quản lý sản phẩm</h6>
-                        <a className="collapse-item" href="../admin/products/insert.html">Thêm sản phẩm</a>
-                        <a className="collapse-item" href="../admin/products/list.html">Danh sách</a>
+                        <h6 className="collapse-header">Quản lý bài đăng</h6>
+                        <Link className="collapse-item" to="/admin/insert/post">Thêm bài đăng</Link>
+                        <Link className="collapse-item" to="/admin/list/post">Danh sách</Link>
                     </div>
                 </div>
             </li>
