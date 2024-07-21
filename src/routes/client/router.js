@@ -4,7 +4,8 @@ import Header from '../../layouts/client/component/Header';
 import Home from '../../pages/client/home/Home';
 import About from '../../pages/client/about/About';
 import Footer from '../../layouts/client/component/Footer';
-
+import Login from '../../pages/client/login/Login';
+import Register from '../../pages/client/register/Register';
 import '../../assets/client/styles/css/bootstrap.min.css'
 import '../../assets/client/styles/css/bootstrap-icons.css'
 import '../../assets/client/styles/css/owl.theme.default.min.css'
@@ -17,11 +18,12 @@ const AppRouter = () => {
     <>
   <main>
       <Header />
-
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/register" element={<Register />}/>
+        
         {/* Add more routes here */}
       </Routes>
       </main>

@@ -57,8 +57,8 @@ function Header({ userId, user, categories }) {
               <i className="fs-4 bi bi-person-circle"></i>
             </Link>
             <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-              <li><Link className="dropdown-item" to="/client/form/login">Đăng nhập</Link></li>
-              <li><Link className="dropdown-item" to="/client/form/signup">Đăng ký</Link></li>
+              <li><Link className="dropdown-item" to="/login">Đăng nhập</Link></li>
+              <li><Link className="dropdown-item" to="/register">Đăng ký</Link></li>
             </ul>
           </div>
         </div>
