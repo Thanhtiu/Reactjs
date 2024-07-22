@@ -12,22 +12,18 @@ function ListCate() {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Tiêu đề</th>
+                                        <th>Tên</th>
                                         <th>Hình ảnh</th>
-                                        <th>Tổng yêu thích</th>
-                                        <th>Tổng bình luận</th>
-                                        <th>Tổng chia sẻ</th>
+                        
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className='align-middle text-center'>1</td>
-                                        <td className='align-middle text-center'>J97</td>
-                                        <td className='align-middle text-center'><img src="https://media.baoquangninh.vn/upload/image/202308/medium/2114869_1e4c4eb3eb44aa1362885c7d76eb976b.jpg" alt="avata" height={75} width={75}></img></td>
-                                        <td className='align-middle text-center'>1</td>
-                                        <td className='align-middle text-center'>1</td>
-                                        <td className='align-middle text-center'>1</td>
+                                        <td className='align-middle text-center'>Món chiên</td>
+                                        <td className='align-middle text-center'><img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F2024-06-24T11%3A54%3A23.083Z.jpg?alt=media&token=e6d4d27f-265d-44c8-a217-0d684df697a2" alt="avata" height={75} width={75}></img></td>
+                                    
                                         <td className='align-middle text-center'>
                                             <button className='btn btn-success'><i class="bi bi-pencil-square"></i></button>
                                             <button className='btn btn-danger mx-2'><i class="bi bi-trash3"></i></button>

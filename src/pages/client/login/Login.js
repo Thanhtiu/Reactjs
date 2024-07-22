@@ -39,7 +39,7 @@ function Login() {
               </div>
               <div className="text-center mt-5">
                 <p className="text-white">
-                  Bạn đã có tài khoản chưa? <a className="text-sm-start" href="/client/form/signup">Đăng ký</a>
+                  Bạn đã có tài khoản chưa? <a className="text-sm-start" href="/register">Đăng ký</a>
                 </p>
               </div>
             </form>

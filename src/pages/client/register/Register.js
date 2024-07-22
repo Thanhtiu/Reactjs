@@ -54,7 +54,7 @@ function Register() {
               </div>
               <div className="text-center mt-5">
                 <p className="text-white">
-                  Đăng nhập ngay! <a className="text-info" href="/client/form/login">Đăng nhập</a>
+                  Đăng nhập ngay! <a className="text-info" href="/login">Đăng nhập</a>
                 </p>
               </div>
             </form>
