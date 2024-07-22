@@ -47,7 +47,7 @@ function Header({ userId, user, categories }) {
               </ul>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/client/contact">Liên hệ</Link>
+              <Link className="nav-link" to="/contact">Liên hệ</Link>
             </li>
           </ul>
 

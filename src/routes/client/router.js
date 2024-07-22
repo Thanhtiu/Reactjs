@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from '../../layouts/client/component/Header';
 import Home from '../../pages/client/home/Home';
 import About from '../../pages/client/about/About';
+import Contact from '../../pages/client/contact/Contact';
 import Footer from '../../layouts/client/component/Footer';
 
 import '../../assets/client/styles/css/bootstrap.min.css'
@@ -22,6 +23,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         {/* Add more routes here */}
       </Routes>
       </main>

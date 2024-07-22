@@ -29,8 +29,8 @@ function ListCate() {
                                         <td className='align-middle text-center'>1</td>
                                         <td className='align-middle text-center'>1</td>
                                         <td className='align-middle text-center'>
-                                            <button className='btn btn-success'><i class="bi bi-pencil-square"></i></button>
-                                            <button className='btn btn-danger mx-2'><i class="bi bi-trash3"></i></button>
+                                            <button className='btn btn-outline-success'><i class="bi bi-pencil-square"></i></button>
+                                            <button className='btn btn-outline-danger mx-2'><i class="bi bi-trash3"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
