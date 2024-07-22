@@ -7,6 +7,12 @@ import Contact from '../../pages/client/contact/Contact';
 import Footer from '../../layouts/client/component/Footer';
 import Login from '../../pages/client/login/Login';
 import Register from '../../pages/client/register/Register';
+import Categories from '../../pages/client/categories/Categories';
+import CategoriesDetail from '../../pages/client/categories/CategoriesDetail';
+import Footer from '../../layouts/client/component/Footer';
+
+
+
 import '../../assets/client/styles/css/bootstrap.min.css'
 import '../../assets/client/styles/css/bootstrap-icons.css'
 import '../../assets/client/styles/css/owl.theme.default.min.css'
@@ -26,6 +32,8 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/contact" element={<Contact />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/categories-detail" element={<CategoriesDetail />} />
         {/* Add more routes here */}
       </Routes>
       </main>

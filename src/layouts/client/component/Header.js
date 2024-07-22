@@ -42,7 +42,7 @@ function Header({ userId, user, categories }) {
               <Link className="nav-link dropdown-toggle" to="/client/menu/product" id="navbarLightDropdownMenuLink"
                 role="button" data-bs-toggle="dropdown" aria-expanded="false">Thể loại</Link>
               <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                <li><Link className="dropdown-item" to="/client/menu/product">Thể Loại</Link></li>
+                <li><Link className="dropdown-item" to="/categories">Thức ăn nhanh</Link></li>
                 {/* Additional dropdown items */}
               </ul>
             </li>

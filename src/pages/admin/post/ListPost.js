@@ -14,7 +14,7 @@ function ListPost() {
                                         <th>#</th>
                                         <th>Tiêu đề</th>
                                         <th>Hình ảnh</th>
-                                        <th>Tôngr yêu thích</th>
+                                        <th>Tổng yêu thích</th>
                                         <th>Tổng bình luận</th>
                                         <th>Tổng chia sẻ</th>
                                         <th></th>
@@ -24,7 +24,7 @@ function ListPost() {
                                     <tr>
                                         <td className='align-middle text-center'>1</td>
                                         <td className='align-middle text-center'>hihi</td>
-                                        <td className='align-middle text-center'><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqTjQn2FBkYhWkcPoYKXv2PHY-CmOJnDxsqg&s" alt="avata" height={100} width={100}></img></td>
+                                        <td className='align-middle text-center'><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqTjQn2FBkYhWkcPoYKXv2PHY-CmOJnDxsqg&s" alt="avata" height={75} width={75}></img></td>
                                         <td className='align-middle text-center'>1</td>
                                         <td className='align-middle text-center'>1</td>
                                         <td className='align-middle text-center'>1</td>
