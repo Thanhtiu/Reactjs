@@ -26,6 +26,8 @@ const AppRouterAdmin = () => {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/cate/insert" element={<InsertCate />} />
+            <Route path="/cate/list" element={<ListCate />} />
             <Route path="/customers/insert" element={<InsertCustomers />} />
             <Route path="/customers/edit/:id" element={<EditCustomer />} />
             <Route path="/customers/list" element={<CustomerList />} />

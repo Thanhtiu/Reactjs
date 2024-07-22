@@ -23,6 +23,16 @@ const posts = [
     view: 456,
     total_comments: 20,
   },
+  {
+    id: 2,
+    title: "Gà rán",
+    images: "2024-06-23T16:13:59.096Z.jpg",
+    images_customers: "chef-2.jpg",
+    username: "Dương Huy Khải",
+    audio: "audio2.mp3",
+    view: 456,
+    total_comments: 20,
+  },
 
 ];
 
@@ -229,7 +239,7 @@ function Home() {
 
           <div className="row">
             {posts.map((post) => (
-              <div className="col-lg-12 col-12 mb-4" key={post.id}>
+              <div className="col-lg-6 col-12 mb-4" key={post.id}>
                 <div className="custom-block d-flex" style={{ height: '300px' }}>
                   <div className="">
                     <div className="custom-block-icon-wrap">
