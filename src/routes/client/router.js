@@ -9,7 +9,7 @@ import Login from '../../pages/client/login/Login';
 import Register from '../../pages/client/register/Register';
 import Categories from '../../pages/client/categories/Categories';
 import CategoriesDetail from '../../pages/client/categories/CategoriesDetail';
-import Footer from '../../layouts/client/component/Footer';
+
 
 
 

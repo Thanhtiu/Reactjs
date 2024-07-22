@@ -135,7 +135,7 @@ progress.rating-bg::-moz-progress-bar {
     border: none !important;
 }
 
-button {
+.shadow  {
     font-family: inherit;
     font-size: 18px;
     background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);

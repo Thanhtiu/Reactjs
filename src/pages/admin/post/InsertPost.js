@@ -32,7 +32,7 @@ function InsertPost() {
                             <div className='row mt-3'>
                                 <div className='col-sm-12'>
                                     <label>Mô tả</label>
-                                    <textarea className='form-control' rows="12" id="description" name="description"></textarea>
+                                    <textarea className='form-control' rows="6" id="description" name="description"></textarea>
                                 </div>
                             </div>
                             <div className='text-end mt-3'>

@@ -137,7 +137,7 @@ function CategoriesDetail() {
                                     <textarea name="contents" id="contents" className="form-control" rows="3" placeholder="Bình luận của bạn"></textarea> <br />
                                     <span className="error text-danger"></span> <br /> <br />
                                     <div className="d-flex justify-content-end">
-                                        <button>
+                                        <button className='shadow '>
                                             <div className="svg-wrapper-1">
                                                 <div className="svg-wrapper">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
