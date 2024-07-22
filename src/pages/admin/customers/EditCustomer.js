@@ -54,7 +54,7 @@ const EditCustomer = () => {
 
 
   return (
-    <div className="row">
+    <div className="row m-auto">
       <div className="col-lg-12">
         <div className="card">
           <div className="card-header">Chỉnh sửa khách hàng</div>

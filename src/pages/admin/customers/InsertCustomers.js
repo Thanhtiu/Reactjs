@@ -2,7 +2,7 @@ import React from "react"
 
 function InsertCustomers() {
     return (
-        <div class="row">
+        <div class="row m-auto">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">Thêm khách hàng</div>
