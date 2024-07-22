@@ -39,8 +39,8 @@ function Menu() {
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
                         <h6 className="collapse-header">Quản lý loại</h6>
-                        <Link to='/admin/cate/insert' className="collapse-item">Thêm loại</Link>
-                        <Link to='/admin/cate/list' className="collapse-item" >Danh sách</Link>
+                        <Link to='/admin/insert/cate' className="collapse-item">Thêm loại</Link>
+                        <Link to='/admin/list/cate' className="collapse-item" >Danh sách</Link>
                     </div>
                 </div>
                 
