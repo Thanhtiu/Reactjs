@@ -2,6 +2,17 @@ import React from "react";
 
 function Contact() {
   return (
+    <>
+          <header className="site-header d-flex flex-column justify-content-center align-items-center">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 col-12 text-center">
+              <h2 className="mb-2">Liên hệ</h2>
+            </div>
+          </div>
+        </div>
+      </header>
+
     <div class="container mt-5">
                 <div class="row justify-content-center">
 
@@ -50,8 +61,7 @@ function Contact() {
                                 <div class="form-floating">
                                     <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*"
                                         class="form-control" placeholder="Email address" required=""></input>
-
-                                    <label for="floatingInput">Địa chỉ email</label>
+<label for="floatingInput">Địa chỉ email</label>
                                 </div>
                             </div>
 
@@ -75,7 +85,7 @@ function Contact() {
                 </div>
                 </div>
             </div>
-
+            </>
   );
 }
 

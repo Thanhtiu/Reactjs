@@ -1,6 +1,6 @@
 a:hover {
     text-decoration: none !important;
-    color: #239c0b !important;
+    
   }
 
 .bi-play-fill{
@@ -11,7 +11,7 @@ a:hover {
     height: 112px !important;
 }
 
-button {
+.shadow {
     font-family: inherit;
     font-size: 18px;
     background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);

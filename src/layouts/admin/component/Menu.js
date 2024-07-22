@@ -39,8 +39,8 @@ function Menu() {
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
                         <h6 className="collapse-header">Quản lý loại</h6>
-                        <Link to='/admin/insert/cate' className="collapse-item">Thêm loại</Link>
-                        <Link to='/admin/list/cate' className="collapse-item" >Danh sách</Link>
+                        <Link to='/admin/cate/insert' className="collapse-item">Thêm loại</Link>
+                        <Link to='/admin/cate/list' className="collapse-item" >Danh sách</Link>
                     </div>
                 </div>
                 
@@ -82,10 +82,10 @@ function Menu() {
 
             {/* Hóa đơn */}
             <li className="nav-item">
-                <a className="nav-link" href="../admin/orders/list.html">
-                    <i className="bi bi-building"></i>
-                    <span>Hóa đơn</span>
-                </a>
+                <Link className="nav-link" to="/admin/comment/list">
+                <i class="bi bi-chat-dots"></i>
+                    <span>Bình luận</span>
+                </Link>
             </li>
             
             {/* Divider */}
