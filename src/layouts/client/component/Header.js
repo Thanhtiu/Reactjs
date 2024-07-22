@@ -30,7 +30,7 @@ function Header({ userId, user, categories }) {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse d-flex align-items-center" id="navbarNav">
           <ul className="navbar-nav ms-lg-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/">Trang chủ</Link>
@@ -52,7 +52,7 @@ function Header({ userId, user, categories }) {
           </ul>
 
           <div className="nav-item dropdown">
-            <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll" to="#"
+            <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
               id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i className="fs-4 bi bi-person-circle"></i>
             </Link>

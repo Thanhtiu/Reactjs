@@ -45,6 +45,77 @@ https://templatemo.com/tm-584-pod-talk
   --font-weight-semibold:         600;
   --font-weight-bold:             700;
 }
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
 
 body {
   background-color: var(--white-color);
@@ -266,7 +337,20 @@ main {
 /*---------------------------------------
   NAVIGATION              
 -----------------------------------------*/
-
+.navbar {
+  background-color: transparent;
+  position: static;
+  top: 0;
+  background-image: linear-gradient(to right, #00b4db, #0084b0e8);
+  color: white;
+  padding: 10px 0;
+  position: sticky;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
@@ -295,11 +379,7 @@ main {
 
 .navbar-nav .nav-link {
   display: inline-block;
-  color: var(--section-bg-color);
-  font-family: var(--title-font-family); 
-  font-size: var(--menu-font-size);
-  font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
+  color: white;
   letter-spacing: 0.5px;
   position: relative;
   padding-top: 15px;
@@ -1237,52 +1317,4 @@ main {
   }
 
 }
-
-.text-danger {
-  color: red; /* Màu đỏ */
-
-}
-.custom-search {
-  position: relative;
-
-}
-#searchSuggestions {
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-menu {
-  padding: 0.5rem 0;
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-}
-
-.dropdown-menu li {
-  list-style: none;
-}
-
-
-
-.dropdown-menu a:hover {
-  background-color: #f8f9fa;
-}
-.dropdown-item {
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background-color: #007bff;
-  color: #fff;
-}
-.navbar {
-background-image: linear-gradient(to right, #00b4db, #0084b0e8);
-          color: white;
-          padding: 10px 0;
-          position: fixed;
-          top: 0; 
-          z-index: 1000;
-      }
 
