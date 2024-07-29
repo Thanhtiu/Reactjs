@@ -51,14 +51,14 @@ function Menu() {
                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseForm"
                     aria-expanded="false" aria-controls="collapseForm">
                     <i className="bi bi-box2-fill"></i>
-                    <span>Sản phẩm</span>
+                    <span>Bài đăng</span>
                 </a>
                 <div id="collapseForm" className="collapse" aria-labelledby="headingForm"
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
-                        <h6 className="collapse-header">Quản lý sản phẩm</h6>
-                        <Link className="collapse-item" to="../admin/products/insert.html">Thêm sản phẩm</Link>
-                        <a className="collapse-item" href="../admin/products/list.html">Danh sách</a>
+                        <h6 className="collapse-header">Quản lý bài đăng</h6>
+                        <Link className="collapse-item" to="/admin/insert/post">Thêm bài đăng</Link>
+                        <Link className="collapse-item" to="/admin/list/post">Danh sách</Link>
                     </div>
                 </div>
             </li>
@@ -74,18 +74,18 @@ function Menu() {
                     data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
                         <h6 className="collapse-header">Quản lý khách hàng</h6>
-                        <a className="collapse-item" href="../admin/customers/insert.html">Thêm khách hàng</a>
-                        <a className="collapse-item" href="../admin/customers/list.html">Danh sách khách hàng</a>
+                        <Link to='/admin/customers/insert' className="collapse-item">Thêm khách hàng</Link>
+                        <Link to='/admin/customers/list' className="collapse-item">Danh sách khách hàng</Link>
                     </div>
                 </div>
             </li>
 
             {/* Hóa đơn */}
             <li className="nav-item">
-                <a className="nav-link" href="../admin/orders/list.html">
-                    <i className="bi bi-building"></i>
-                    <span>Hóa đơn</span>
-                </a>
+                <Link className="nav-link" to="/admin/comment/list">
+                <i class="bi bi-chat-dots"></i>
+                    <span>Bình luận</span>
+                </Link>
             </li>
             
             {/* Divider */}

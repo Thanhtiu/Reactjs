@@ -30,7 +30,7 @@ function Header({ userId, user, categories }) {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse d-flex align-items-center" id="navbarNav">
           <ul className="navbar-nav ms-lg-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/">Trang chủ</Link>
@@ -42,7 +42,7 @@ function Header({ userId, user, categories }) {
               <Link className="nav-link dropdown-toggle" to="/client/menu/product" id="navbarLightDropdownMenuLink"
                 role="button" data-bs-toggle="dropdown" aria-expanded="false">Thể loại</Link>
               <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                <li><Link className="dropdown-item" to="/client/menu/product">Thể Loại</Link></li>
+                <li><Link className="dropdown-item" to="/categories">Thức ăn nhanh</Link></li>
                 {/* Additional dropdown items */}
               </ul>
             </li>
@@ -52,13 +52,13 @@ function Header({ userId, user, categories }) {
           </ul>
 
           <div className="nav-item dropdown">
-            <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll" to="#"
+            <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
               id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i className="fs-4 bi bi-person-circle"></i>
             </Link>
             <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-              <li><Link className="dropdown-item" to="/client/form/login">Đăng nhập</Link></li>
-              <li><Link className="dropdown-item" to="/client/form/signup">Đăng ký</Link></li>
+              <li><Link className="dropdown-item" to="/login">Đăng nhập</Link></li>
+              <li><Link className="dropdown-item" to="/register">Đăng ký</Link></li>
             </ul>
           </div>
         </div>

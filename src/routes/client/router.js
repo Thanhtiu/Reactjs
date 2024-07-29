@@ -5,6 +5,12 @@ import Home from '../../pages/client/home/Home';
 import About from '../../pages/client/about/About';
 import Contact from '../../pages/client/contact/Contact';
 import Footer from '../../layouts/client/component/Footer';
+import Login from '../../pages/client/login/Login';
+import Register from '../../pages/client/register/Register';
+import Categories from '../../pages/client/categories/Categories';
+import CategoriesDetail from '../../pages/client/categories/CategoriesDetail';
+
+
 
 
 import '../../assets/client/styles/css/bootstrap.min.css'
@@ -24,7 +30,11 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/register" element={<Register />}/>
         <Route path="/contact" element={<Contact />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/categories-detail" element={<CategoriesDetail />} />
         {/* Add more routes here */}
       </Routes>
       </main>
