@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axiosInstance from '../firebase/axiosConfig';
 import { storage } from '../firebase/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { DialogService } from '../../../services/common/DialogService';
 
 function InsertPost() {
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
@@ -67,7 +68,7 @@ function InsertPost() {
             delete data.confirm_password;
             console.log('Data to be sent:', data);
             await axiosInstance.post('/api/post', data);
-            alert('Thêm bài đăng thành công');
+        DialogService.success('Thêm thành công')
             reset();
         } catch (error) {
             console.error('Upload failed:', error);

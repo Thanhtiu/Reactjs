@@ -8,7 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const userInfo = localStorage.getItem('userInfo');
-    return userInfo ? JSON.parse(userInfo) : null;
+    return userInfo ? JSON.parse(userInfo) : {};
   });
 
   const login = async (form) => {
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       
 
       localStorage.setItem('token', token);
-      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      localStorage.setItem('userInfo', JSON.stringify(response.data));
 
       setUser(userInfo);
       return response; 

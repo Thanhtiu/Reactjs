@@ -65,8 +65,10 @@ function ListPost() {
                                             <td className='align-middle text-center'>{item.total_comments}</td>
                                             <td className='align-middle text-center'>{item.total_shares}</td>
                                             <td className='align-middle text-center'>
-                                                <button className='btn btn-success' onClick={() => handleEdit(item.id)}><i className="bi bi-pencil-square"></i></button>
-                                                <button className='btn btn-danger mx-2' onClick={() => handleDelete(item.id)}><i className="bi bi-trash3"></i></button>
+                                            <div className='d-flex'>
+                                            <button className='btn btn-success' onClick={() => handleEdit(item.id)}><i className="bi bi-pencil-square"></i></button>
+                                            <button className='btn btn-danger mx-2' onClick={() => handleDelete(item.id)}><i className="bi bi-trash3"></i></button>
+                                            </div>
                                             </td>
                                         </tr>
                                     ))}
