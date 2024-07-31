@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useAuth } from '../../../auth/AuthContext'; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-
+import { DialogService } from '../../../services/common/DialogService'
 function Header() {
-  // State for each dropdown
+  const { logout } = useAuth();
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   const [isBellDropdownOpen, setIsBellDropdownOpen] = useState(false);
   const [isEnvelopeDropdownOpen, setIsEnvelopeDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -36,6 +39,20 @@ function Header() {
     setIsBellDropdownOpen(false);
     setIsEnvelopeDropdownOpen(false);
     setIsProfileDropdownOpen(false);
+  };
+
+  const logOut = async () => {
+    try {
+      DialogService.success('Đăng xuất thành công')
+      setTimeout(() => {
+       logout(); 
+      }, 1500);
+    
+  
+      
+    } catch (error) {
+      
+    }
   };
 
   return (
@@ -128,9 +145,8 @@ function Header() {
             <div className="dropdown-divider"></div>
             <a
               className="dropdown-item font-weight-bold"
-              href="javascript:void(0);"
-              data-toggle="modal"
-              data-target="#logoutModal"
+              href="#"
+              onClick={() => logOut()} // Call logOut function
             >
               <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
               Đăng xuất
@@ -138,31 +154,6 @@ function Header() {
           </div>
         </li>
       </ul>
-
-      {/* Logout Modal */}
-      <div className="modal fade" id="logoutModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabelLogout">Xác Nhận!</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <p>Bạn muốn thoát?</p>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-outline-primary" data-dismiss="modal">
-                Quay lại
-              </button>
-              <a href="../LTShop/index.html" className="btn btn-primary">
-                Đăng xuất
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
     </nav>
   );
 }

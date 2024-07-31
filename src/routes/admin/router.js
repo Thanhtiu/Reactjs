@@ -18,15 +18,17 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import InsertPost from '../../pages/admin/post/InsertPost';
 import ListPost from '../../pages/admin/post/ListPost';
+
 const AppRouterAdmin = () => {
   return (
     <div id="wrapper">
       <Menu />
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
+        <Header />
+        <Routes>
+        
+            <Route path="/"  element={<Home />} />
             <Route path="/cate/insert" element={<InsertCate />} />
             <Route path="/cate/list" element={<ListCate />} />
             <Route path="/customers/insert" element={<InsertCustomers />} />
@@ -35,12 +37,18 @@ const AppRouterAdmin = () => {
             <Route path="/comment/list" element={<CommentList />} />
             <Route path="/insert/post" element={<InsertPost />} />
             <Route path="/list/post" element={<ListPost />} />
+    
           </Routes>
+      
         </div>
         <Footer />
       </div>
     </div>
+        
+      
+  
   );
+
 }
 
 export default AppRouterAdmin;

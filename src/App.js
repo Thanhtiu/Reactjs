@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
 import AppRouter from './routes/client/router';
 import AppRouterAdmin from './routes/admin/router';
-import { createGlobalStyle } from 'styled-components';
+import Login from './auth/login';
+import ProtectedRoute from './utils/ProtectedRoute';
+import { AuthProvider } from './auth/AuthContext'; 
+import OTPForm from './auth/OtpForm';
+import Emailer from './auth/Emailer';
+import ChangePassword from './auth/ChangePassword';
 
-// Import your custom font files if needed
-
-// Define global styles using createGlobalStyle
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
@@ -24,15 +27,27 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <div className="App">
-        <Routes>
-          <Route path="/*" element={<AppRouter />} />
-          <Route path="/admin/*" element={<AppRouterAdmin />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <GlobalStyle />
+        <div className="App">
+          <Routes>
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/emailer" element={< Emailer />} />
+            <Route path='/auth/otp' element={<OTPForm/>}> </Route>
+            <Route path='/auth/changepassword' element={<ChangePassword/>}> </Route>
+            <Route
+              path="/admin/*"
+              element={<ProtectedRoute element={<AppRouterAdmin />} />}
+            />
+            <Route
+              path="/*"
+              element={<AppRouter />}
+            />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
