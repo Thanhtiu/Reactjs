@@ -61,8 +61,8 @@ const CustomerList = () => {
                 <tbody>
                   {customers.map((item, index) => (
                     <tr key={item.id}>
-                      <td>{index + 1}</td>
-                      <td>
+                      <td className='align-middle text-center'>{index + 1}</td>
+                      <td className='align-middle text-center'>
                         <img
                           src={item.images}
                           width="80px"
@@ -71,17 +71,17 @@ const CustomerList = () => {
                           className="rounded-circle"
                         />
                       </td>
-                      <td>{item.username}</td>
-                      <td>{item.full_name}</td>
-                      <td>{item.email}</td>
-                      <td className="text-center">
+                      <td className='align-middle text-center'>{item.username}</td>
+                      <td className='align-middle text-center'>{item.full_name}</td>
+                      <td className='align-middle text-center'>{item.email}</td>
+                      <td className="align-middle text-center">
                         <button
-                          className="btn btn-outline-success mx-2"
+                          className="btn btn-success mx-2"
                           onClick={() => handleEdit(item.id)}
                         >
-                          <i className="bi bi-pencil"></i>
+                          <i class="bi bi-pencil-square"></i>
                         </button>
-                        <button className="btn btn-outline-danger mx-2">
+                        <button className="btn btn-danger mx-2">
                           <i className="bi bi-trash"></i>
                         </button>
                       </td>

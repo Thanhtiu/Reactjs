@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../firebase/axiosConfig';
 import { storage } from '../firebase/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-function InsertPost() {
-    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
+function EditPost() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
     const [fileImg, setFileImg] = useState(null);
     const [fileAudio, setFileAudio] = useState(null);
-    const [imgPreview, setImgPreview] = useState('');
-    const [audioPreview, setAudioPreview] = useState('');
+    const [currentImgURL, setCurrentImgURL] = useState('');
+    const [currentAudioURL, setCurrentAudioURL] = useState('');
     const [isUploading, setIsUploading] = useState(false);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState([]); 
 
     useEffect(() => {
+
         const fetchCategories = async () => {
             try {
                 const response = await axiosInstance.get('/api/categories');
@@ -22,8 +26,31 @@ function InsertPost() {
                 console.error('Error fetching categories:', error);
             }
         };
+
         fetchCategories();
     }, []);
+
+    useEffect(() => {
+        const fetchPostData = async () => {
+            if (id) {
+                try {
+                    const response = await axiosInstance.get(`/api/post/${id}`);
+                    const postData = response.data.data[0];
+
+                    setValue('title', postData.title);
+                    setValue('description', postData.description);
+                    setValue('categories_id', postData.categories_id);
+                    setCurrentImgURL(postData.images || '');
+                    setCurrentAudioURL(postData.audio || '');
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+        };
+
+        fetchPostData();
+    }, [id, setValue]);
+
     const onFileChange = (e) => {
         const { name, files } = e.target;
         if (files.length > 0) {
@@ -34,9 +61,12 @@ function InsertPost() {
             }
         }
     };
+
     const onSubmit = async (data) => {
         setIsUploading(true);
+
         try {
+
             if (fileImg) {
                 const imgExtension = fileImg.name.split('.').pop();
                 const currentDate = new Date();
@@ -46,9 +76,14 @@ function InsertPost() {
                 await uploadBytes(imgRef, fileImg);
                 const imgUrl = await getDownloadURL(imgRef);
 
+
                 const imgFileNameFromUrl = imgPath.split('/').pop();
                 data.images = imgFileNameFromUrl;
+            } else {
+
+                data.images = currentImgURL;
             }
+
 
             if (fileAudio) {
                 const audioExtension = fileAudio.name.split('.').pop();
@@ -58,17 +93,18 @@ function InsertPost() {
                 const audioRef = ref(storage, audioPath);
                 await uploadBytes(audioRef, fileAudio);
                 const audioUrl = await getDownloadURL(audioRef);
-
                 const audioFileNameFromUrl = audioPath.split('/').pop();
                 data.audio = audioFileNameFromUrl;
+            } else {
+                data.audio = currentAudioURL;
             }
-
             data.customers_id = 7;
             delete data.confirm_password;
+
             console.log('Data to be sent:', data);
-            await axiosInstance.post('/api/post', data);
-            alert('Thêm bài đăng thành công');
-            reset();
+            await axiosInstance.patch(`/api/post/${id}`, data);
+            alert('Cập nhật bài đăng thành công');
+            navigate(`/admin/list/post`);
         } catch (error) {
             console.error('Upload failed:', error);
             alert('Upload failed');
@@ -81,24 +117,24 @@ function InsertPost() {
         <div className='row m-auto'>
             <div className='col-lg-12'>
                 <div className='card'>
-                    <div className='card-header'>Thêm bài đăng</div>
+                    <div className='card-header'>{id ? 'Cập nhật bài đăng' : 'Thêm bài đăng'}</div>
                     <div className='card-body'>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form className='form' encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
                             <div className='row'>
                                 <div className='col-sm-3'>
-                                    <label htmlFor="title" className="fw-bold col-form-label">Tiêu đề</label>
+                                    <label htmlFor="title">Tiêu đề</label>
                                     <input
                                         type='text'
                                         className='form-control'
                                         id="title"
                                         name="title"
                                         placeholder="Tiêu đề..."
-                                        {...register('title', { required: 'Tiêu đề là bắt buộc' })}
+                                        {...register('title', { required: true })}
                                     />
-                                    {errors.title && <span className='text-danger'>{errors.title.message}</span>}
+                                    {errors.title && <span className='text-danger'>Vui lòng nhập tiêu đề!</span>}
                                 </div>
                                 <div className='col-sm-3'>
-                                    <label htmlFor="images" className="fw-bold col-form-label">Hình ảnh</label>
+                                    <label htmlFor="images">Hình ảnh</label>
                                     <input
                                         type='file'
                                         className='form-control'
@@ -107,11 +143,11 @@ function InsertPost() {
                                         accept="image/*"
                                         onChange={onFileChange}
                                     />
-                                    {imgPreview && <img src={imgPreview} alt="Image preview" style={{ width: '100%', height: 'auto' }} className="img-thumbnail mt-2" />}
-                                    {errors.images && <span className='text-danger'>{errors.images.message}</span>}
+                                    {errors.images && <span className='text-danger'>Vui lòng chọn ảnh!</span>}
+                                    
                                 </div>
                                 <div className='col-sm-3'>
-                                    <label htmlFor="audio" className="fw-bold col-form-label">Audio</label>
+                                    <label htmlFor="audio">Audio</label>
                                     <input
                                         type='file'
                                         className='form-control'
@@ -120,42 +156,43 @@ function InsertPost() {
                                         accept="audio/*"
                                         onChange={onFileChange}
                                     />
-                                    {audioPreview && <audio controls src={audioPreview} className="mt-2" />}
-                                    {errors.audio && <span className='text-danger'>{errors.audio.message}</span>}
+                                    {errors.audio && <span className='text-danger'>Vui lòng chọn audio!</span>}
+                                   
                                 </div>
                                 <div className='col-sm-3'>
-                                    <label htmlFor="categories_id" className="fw-bold col-form-label">Loại</label>
+                                    <label htmlFor="categories_id">Loại</label>
                                     <select
-                                        className='form-control'
+                                        className='col-12 form-control'
                                         name="categories_id"
                                         id="categories_id"
-                                        {...register('categories_id', { required: 'Loại là bắt buộc' })}
+                                        {...register('categories_id', { required: true })}
                                     >
-                                        <option value="" disabled selected>Vui lòng chọn loại!</option>
+                                        <option value="" disabled>Vui lòng chọn loại!</option>
                                         {categories.map(category => (
                                             <option key={category.id} value={category.id}>
                                                 {category.name}
                                             </option>
                                         ))}
                                     </select>
-                                    {errors.categories_id && <span className='text-danger'>{errors.categories_id.message}</span>}
+                                    {errors.categories_id && <span className='text-danger'>Vui lòng chọn một thể loại!</span>}
                                 </div>
                             </div>
                             <div className='row mt-3'>
                                 <div className='col-sm-12'>
-                                    <label htmlFor="description" className="fw-bold col-form-label">Mô tả</label>
+                                    <label htmlFor="description">Mô tả</label>
                                     <textarea
                                         className='form-control'
                                         rows="6"
                                         id="description"
                                         name="description"
+                                        placeholder="Mô tả..."
                                         {...register('description')}
                                     ></textarea>
                                 </div>
                             </div>
                             <div className='text-end mt-3'>
                                 <button type="submit" className='btn btn-success' disabled={isUploading}>
-                                    {isUploading ? 'Uploading...' : <i className="bi bi-plus"></i>} Thêm
+                                    {isUploading ? 'Uploading...' : <i className="bi bi-plus"></i>} {id ? 'Cập nhật' : 'Thêm'}
                                 </button>
                             </div>
                         </form>
@@ -166,4 +203,4 @@ function InsertPost() {
     );
 }
 
-export default InsertPost;
+export default EditPost;

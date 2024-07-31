@@ -20,6 +20,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import InsertPost from '../../pages/admin/post/InsertPost';
 import ListPost from '../../pages/admin/post/ListPost';
 
+import EditPost from '../../pages/admin/post/EditPost';
 const AppRouterAdmin = () => {
   return (
     <div id="wrapper">
@@ -39,7 +40,7 @@ const AppRouterAdmin = () => {
             <Route path="/comment/list" element={<CommentList />} />
             <Route path="/insert/post" element={<InsertPost />} />
             <Route path="/list/post" element={<ListPost />} />
-    
+            <Route path="/edit/post/:id" element={<EditPost />} />
           </Routes>
       
         </div>
