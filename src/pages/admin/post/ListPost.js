@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import axiosInstance from '../firebase/axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import { DialogService } from '../../../services/common/DialogService';
 function ListPost() {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -23,16 +24,24 @@ function ListPost() {
         navigate(`/admin/edit/post/${id}`);
     };
     const handleDelete = async (id) => {
-        if (window.confirm("Bạn có chắc chắn muốn xóa thể loại này?")) {
-            try {
-                await axiosInstance.delete(`/api/post/${id}`);
-                setData(data.filter(item => item.id !== id));
-                alert("Xóa thể loại thành công");
-            } catch (error) {
-                console.error("Error deleting category:", error);
-                alert("Xóa thể loại thất bại");
-            }
-        }
+        const item = 'post';
+        DialogService.showConfirmationDialog(item, id)
+            .then((confirmed) => {
+                if (confirmed) {
+                    setData(data.filter(item => item.id !== id));
+                    DialogService.success('Xóa bài đăng thành công !!!');
+                } else {
+
+                }
+            })
+            .catch((error) => {
+                if (error.response && error.response.status === 400) {
+                    DialogService.error('Bài đăng này không thể xóa.');
+                } else {
+                    console.error('Error deleting customer:', error);
+                    DialogService.error('Đã xảy ra lỗi khi cố gắng xóa khách hàng.');
+                }
+            });
     };
     return (
         <div className='row m-auto'>
@@ -65,10 +74,10 @@ function ListPost() {
                                             <td className='align-middle text-center'>{item.total_comments}</td>
                                             <td className='align-middle text-center'>{item.total_shares}</td>
                                             <td className='align-middle text-center'>
-                                            <div className='d-flex'>
-                                            <button className='btn btn-success' onClick={() => handleEdit(item.id)}><i className="bi bi-pencil-square"></i></button>
-                                            <button className='btn btn-danger mx-2' onClick={() => handleDelete(item.id)}><i className="bi bi-trash3"></i></button>
-                                            </div>
+                                                <div className='d-flex'>
+                                                    <button className='btn btn-success' onClick={() => handleEdit(item.id)}><i className="bi bi-pencil-square"></i></button>
+                                                    <button className='btn btn-danger mx-2' onClick={() => handleDelete(item.id)}><i className="bi bi-trash3"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}

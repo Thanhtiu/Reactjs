@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../firebase/axiosConfig';
 import { storage } from '../firebase/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
+import { DialogService } from '../../../services/common/DialogService';
 function EditPost() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -103,11 +103,11 @@ function EditPost() {
 
             console.log('Data to be sent:', data);
             await axiosInstance.patch(`/api/post/${id}`, data);
-            alert('Cập nhật bài đăng thành công');
+            DialogService.success('Cập nhật bài đăng thành công');
             navigate(`/admin/list/post`);
         } catch (error) {
             console.error('Upload failed:', error);
-            alert('Upload failed');
+            DialogService.error('Lỗi khi tải dữ liệu bài đăng.');
         } finally {
             setIsUploading(false);
         }
