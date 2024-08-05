@@ -20,12 +20,13 @@ import '../../assets/client/styles/css/main.css'
 import '../../assets/client/styles/css/login.css'
 import '../../assets/client/styles/css/templatemo-pod-talk.css'
 
-
 const AppRouter = () => {
   return (
     <>
   <main>
       <Header />
+
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
