@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import elsa from '../../../assets/client/styles/images/profile/woman-posing-black-dress-medium-shot.jpg';
+
 function Post() {
     const [data, setData] = useState([]);
     const [allData, setAllData] = useState([]);
@@ -49,7 +49,7 @@ function Post() {
             </div>
 
             {postsToDisplay.map((post) => (
-        <div className="col-lg-4 col-12 mb-4 mb-lg-0" key={post.id}>
+        <div className="col-lg-4 col-12 mb-4 mb-lg-0 mt-2"   key={post.id}>
           <div className="custom-block custom-block-full">
             <div className="custom-block-image-wrap">
             <Link to={`/getId_post/${post.id}`}>
@@ -63,14 +63,14 @@ function Post() {
 
             <div className="custom-block-info">
               <h5 className="mb-2">
-                <a href={`/client/menu/post_details/${post.id}`}>
+                <a href={`/getId_post/${post.id}`}>
                   {post.title}
                 </a>
               </h5>
 
               <div className="profile-block d-flex">
                 <img
-                  src={elsa} // Update this if you have dynamic profile images
+                  src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${post.images_customers}?alt=media`} // Update this if you have dynamic profile images
                   style={{ height: '50px' }}
                   className="profile-block-image img-fluid"
                   alt={post.username}

@@ -28,7 +28,7 @@ function Header() {
         <div className="custom-search">
           <form action="/client/search" method="get" className="custom-form search-form flex-fill me-3" role="search">
             <div className="input-group input-group-lg">
-              <input name="message" type="search" className="form-control" id="message" placeholder="Tìm Kiếm..." aria-label="Search" />
+              <input name="message" type="search" className="border-0 p-2 rounded-start" id="message" placeholder="Tìm Kiếm..." aria-label="Search" />
               <button type="submit" className="input-group-text" id="submit">
                 <i className="bi bi-search"></i>
               </button>

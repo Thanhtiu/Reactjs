@@ -163,4 +163,4 @@ function InsertCate() {
   );
 };
 
-export default ListCate;
+export default InsertCate;
