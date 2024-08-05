@@ -8,7 +8,7 @@ import Footer from '../../layouts/client/component/Footer';
 import Login from '../../pages/client/login/Login';
 import Register from '../../pages/client/register/Register';
 import Categories from '../../pages/client/categories/Categories';
-import CategoriesDetail from '../../pages/client/categories/CategoriesDetail';
+import CategoriesDetail from '../../pages/client/post/PostDetail';
 
 
 
@@ -20,20 +20,22 @@ import '../../assets/client/styles/css/main.css'
 import '../../assets/client/styles/css/login.css'
 import '../../assets/client/styles/css/templatemo-pod-talk.css'
 
-
 const AppRouter = () => {
   return (
     <>
   <main>
       <Header />
+
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/contact" element={<Contact />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/categories-detail" element={<CategoriesDetail />} />
+        <Route path="/categories/:id" element={<Categories />} />
+       <Route path="/getId_post/:id" element={<CategoriesDetail />} />
+       
         {/* Add more routes here */}
       </Routes>
       </main>

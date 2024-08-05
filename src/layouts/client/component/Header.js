@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function Header({ userId, user, categories }) {
+function Header() {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:4200/api/categories"); // Adjust URL if needed
+        setCategories(response.data.data); // Adjust based on your API response structure
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container">
@@ -42,8 +58,13 @@ function Header({ userId, user, categories }) {
               <Link className="nav-link dropdown-toggle" to="/client/menu/product" id="navbarLightDropdownMenuLink"
                 role="button" data-bs-toggle="dropdown" aria-expanded="false">Thể loại</Link>
               <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                <li><Link className="dropdown-item" to="/categories">Thức ăn nhanh</Link></li>
-                {/* Additional dropdown items */}
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <Link className="dropdown-item" to={`/categories/${category.id}`}>
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </li>
             <li className="nav-item">
