@@ -33,9 +33,7 @@ const CustomerList = () => {
         if (confirmed) {
           setData(data.filter(item => item.id !== id));
           DialogService.success('Xóa khách hàng thành công !!!');
-        } else {
-          DialogService.error('Khách hàng này không thể xóa.');
-        }
+        } 
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
