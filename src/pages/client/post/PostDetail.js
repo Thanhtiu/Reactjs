@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Assuming you use axios for HTTP requests
 import { useParams } from 'react-router-dom';
 import './details.css';
-
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+}
 function CategoriesDetail() {
     const { id } = useParams(); // Get the id from URL parameters
     const [category, setCategory] = useState(null);
@@ -67,12 +71,12 @@ function CategoriesDetail() {
                                     <div className="custom-block-info">
                                         <div className="custom-block-top d-flex mb-1">
                                             <small>
-                                                <i className="bi-clock-fill custom-icon"></i>
-                                                {category.creat_date || 'Unknown'}
+                                            <i className="bi-clock-fill custom-icon"></i>
+                                            {formatDate(category.create_date)}
                                             </small>
                                         </div>
                                         <h2 className="mb-2">{category.title || 'No Title'}</h2>
-                                        <p>{category.description || 'No Description'}</p>
+                                        <p>{category.description }</p>
                                         <div className="mt-5">
                                         <audio className="w-100" controls loop
                                                 src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.audio}?alt=media&token=e56f877d-977a-4081-9d6e-4ad5e65c5b7e`}>

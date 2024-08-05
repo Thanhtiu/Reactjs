@@ -22,6 +22,7 @@ import ListPost from '../../pages/admin/post/ListPost';
 
 import EditPost from '../../pages/admin/post/EditPost';
 import Info from '../../pages/admin/info/Info';
+import CommentDeatail from '../../pages/admin/comments/CommentDetail';
 
 const AppRouterAdmin = () => {
   return (
@@ -40,6 +41,7 @@ const AppRouterAdmin = () => {
             <Route path="/customers/edit/:id" element={<EditCustomer />} />
             <Route path="/customers/list" element={<CustomerList />} />
             <Route path="/comment/list" element={<CommentList />} />
+            <Route path="/comment/edit/:id" element={< CommentDeatail />} />
             <Route path="/insert/post" element={<InsertPost />} />
             <Route path="/list/post" element={<ListPost />} />
             <Route path="/edit/post/:id" element={<EditPost />} />

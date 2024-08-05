@@ -43,7 +43,7 @@ function Categories() {
                     ) : (
                         data.map((post) => (
                             <div className="col-lg-4 col-12 mb-4 mb-lg-0" key={post.id}>
-                                <div className="custom-block custom-block-full">
+                                <div className="custom-block custom-block-full mt-2">
                                     <div className="custom-block-image-wrap">
                                         <Link to={`/getId_post/${post.id}`}>
                                             <img
@@ -61,7 +61,7 @@ function Categories() {
 
                                         <div className="profile-block d-flex">
                                             <img
-                                                src={elsa} // Update this if you have dynamic profile images
+                                                src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${post.images_customers}?alt=media`} // Update this if you have dynamic profile images
                                                 style={{ height: '50px' }}
                                                 className="profile-block-image img-fluid"
                                                 alt={post.username}

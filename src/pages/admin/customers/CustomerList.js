@@ -3,15 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../firebase/axiosConfig'; 
 import { DialogService } from "../../../services/common/DialogService";
 
+import Pagination from "../pagination/Pagination";
+import Search from "../search/Search";
 const CustomerList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5;
+ 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await axiosInstance.get('/api/customers');
         setData(response.data.data);
+        setFilteredData(response.data.data);
       } catch (error) {
         console.error('Error fetching customers:', error);
         setErrorMessage('Error fetching customers');
@@ -45,27 +52,31 @@ const CustomerList = () => {
       });
   };
   
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setCurrentPage(1);
+    const lowercasedTerm = term.toLowerCase();
+    const filtered = data.filter(
+      (item) =>
+        item.username.toLowerCase().includes(lowercasedTerm) ||
+        item.images.toLowerCase().includes(lowercasedTerm)
+    );
+    setFilteredData(filtered);
+  };
 
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const currentItems = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   return (
     <div className="row m-auto">
       <div className="col-lg-12">
         <div className="card">
-          <div className="card-header d-flex justify-content-between align-items-center">
+        <div className="card-header d-flex justify-content-between align-items-center">
             Danh sách
-            <form action="">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Tìm kiếm"
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" type="button">
-                    <i className="bi bi-search"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
+            <Search onSearch={handleSearch} />
           </div>
           <div className="card-body">
             <div className="table-responsive pt-3">
@@ -81,7 +92,7 @@ const CustomerList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item, index) => (
+                  {currentItems.map((item, index) => (
                     <tr key={item.id}>
                       <td className='align-middle text-center'>{index + 1}</td>
                       <td className='align-middle text-center'>
@@ -114,23 +125,11 @@ const CustomerList = () => {
                   ))}
                 </tbody>
               </table>
-              <nav aria-label="Page navigation">
-                <ul className="pagination justify-content-center mt-3">
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li className="page-item"><a className="page-link" href="#">1</a></li>
-                  <li className="page-item"><a className="page-link" href="#">2</a></li>
-                  <li className="page-item"><a className="page-link" href="#">3</a></li>
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
             </div>
           </div>
         </div>

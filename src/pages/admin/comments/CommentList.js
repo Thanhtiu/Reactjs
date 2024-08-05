@@ -1,36 +1,53 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './CommentList.css';
+import "./CommentList.css";
+import { useNavigate } from "react-router-dom";
+
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString(undefined, options);
+}
 
 function CommentList() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // To manage loading state
+  const [error, setError] = useState(null); // To manage error state
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchComment = async () => {
       try {
         const response = await axios.get("http://localhost:4200/api/comment");
-        setData(response.data.data);
+
+        // Ensure data is handled correctly
+        if (response.data && Array.isArray(response.data.data)) {
+          setData(response.data.data);
+        } else {
+          setData([]); // If the data field is not an array, default to empty
+        }
       } catch (error) {
         console.error("Error fetching comments:", error);
+        setError("Failed to fetch comments."); // Set error message if the request fails
+      } finally {
+        setLoading(false); // Set loading to false when the request is done
       }
     };
 
     fetchComment();
   }, []);
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa bình luận này?")) {
-      try {
-        await axios.delete(`http://localhost:4200/api/comment/${id}`);
-        const updatedData = data.filter(item => item.id !== id);
-        setData(updatedData);
-        alert("Xóa bình luận thành công");
-      } catch (error) {
-        console.error("Error deleting comment:", error);
-        alert("Xóa bình luận thất bại");
-      }
-    }
+  const handleEdit = (id) => {
+    navigate(`/admin/comment/edit/${id}`);
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading state
+  }
+
+  if (error) {
+    return <div>{error}</div>; // Display error state
+  }
 
   return (
     <div className="row m-auto">
@@ -38,77 +55,64 @@ function CommentList() {
         <div className="card">
           <div className="card-header">Danh sách</div>
           <div className="card-body">
-            <div className="table-responsive pt-3">
-              <table className="table table-bordered text-center">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Hình ảnh</th>
-                    <th>Bài đăng</th>
-                    <th>Khách hàng</th>
-                    <th>Hình ảnh</th>
-                    <th>Nội dung</th>
-                    <th>Số sao</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((comment, index) => (
-                    <tr key={comment.id}>
-                      <td className="align-middle text-center">{index + 1}</td>
-                      <td className="align-middle text-center">
-                        <img
-                          src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${comment.images}?alt=media`}
-                          alt="avatar"
-                          height={75}
-                          width={75}
-                        />
-                      </td>
-                      <td className="align-middle text-center">{comment.title}</td>
-                      <td className="align-middle text-center">{comment.customer_username}</td>
-                      <td className="align-middle text-center">
-                        <img
-                          src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${comment.customer_images}?alt=media`}
-                          alt="avatar"
-                          height={75}
-                          width={75}
-                        />
-                      </td>
-                      <td className="align-middle text-center">{comment.contents}</td>
-                      <td className="align-middle text-center">
-                        <div className="rating">
-                          {[...Array(5)].map((star, i) => (
-                            <React.Fragment key={i}>
-                              <input
-                                type="radio"
-                                id={`star-${i + 1}-${comment.id}`}
-                                name={`star-radio-${comment.id}`}
-                                value={`star-${i + 1}`}
-                                checked={i + 1 === comment.rating}
-                                readOnly
-                              />
-                              <label htmlFor={`star-${i + 1}-${comment.id}`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                  <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path>
-                                </svg>
-                              </label>
-                            </React.Fragment>
-                          ))}
-                        </div>
-                      </td>
-                      <td className="align-middle text-center ">
-                        <div className="d-flex">
-                         
-                          <button className="btn btn-outline-danger mx-2" onClick={() => handleDelete(comment.id)}>
-                            <i className="bi bi-trash3"></i>
-                          </button>
-                        </div>
-                      </td>
+            {data.length === 0 ? (
+              <div className="text-center">
+                <p><strong>Không có comment</strong></p>
+              </div>
+            ) : (
+              <div className="table-responsive pt-3">
+                <table className="table table-bordered text-center">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Hình ảnh</th>
+                      <th>Bài đăng</th>
+                      <th>Số lượng</th>
+                      <th>Mới nhất</th>
+                      <th>Cũ nhất</th>
+                      <th></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {data.map((comment, index) => (
+                      <tr key={comment.id}>
+                        <td className="align-middle text-center">{index + 1}</td>
+                        <td className="align-middle text-center">
+                          <img
+                            src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${comment.images}?alt=media&token=c6dc72e8-a1b0-41bb-b1f5-84f63f7397e9`}
+                            alt="avatar"
+                            height={75}
+                            width={75}
+                          />
+                        </td>
+                        <td className="align-middle text-center">
+                          {comment.title}
+                        </td>
+                        <td className="align-middle text-center">
+                          {comment.so_luong}
+                        </td>
+                        <td className="align-middle text-center">
+                          {formatDate(comment.moi_nhat)}
+                        </td>
+                        <td className="align-middle text-center">
+                          {formatDate(comment.cu_nhat)}
+                        </td>
+                        <td className="align-middle text-center">
+                          <div className="d-flex">
+                            <button
+                              className="btn btn-outline-success mx-2"
+                              onClick={() => handleEdit(comment.id)}
+                            >
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </div>

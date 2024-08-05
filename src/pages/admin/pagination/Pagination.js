@@ -12,7 +12,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <ul className="pagination justify-content-center">
         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <button
-            className="page-link"
+            className="page-link rounded-end-0 rounded-start"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -31,7 +31,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ))}
         <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
           <button
-            className="page-link"
+            className="page-link rounded-end rounded-start-0"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
