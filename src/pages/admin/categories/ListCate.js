@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../firebase/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { DialogService } from '../../../services/common/DialogService';
 
 const ListCate = () => {
   const [data, setData] = useState([]);
@@ -25,17 +26,25 @@ const ListCate = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa thể loại này?")) {
-      try {
-        await axiosInstance.delete(`/api/categories/${id}`);
-        setData(data.filter(item => item.id !== id));
-        alert("Xóa thể loại thành công");
-      } catch (error) {
-        console.error("Error deleting category:", error);
-        alert("Xóa thể loại thất bại");
-      }
-    }
-  };
+    const item = 'categories';
+    DialogService.showConfirmationDialog(item, id)
+        .then((confirmed) => {
+            if (confirmed) {
+                setData(data.filter(item => item.id !== id));
+                DialogService.success('Xóa thể loại thành công !!!');
+            } else {
+
+            }
+        })
+        .catch((error) => {
+            if (error.response && error.response.status === 400) {
+                DialogService.error('Thể loại này không thể xóa.');
+            } else {
+                console.error('Error deleting categories:', error);
+                DialogService.error('Đã xảy ra lỗi khi cố gắng xóa khách hàng.');
+            }
+        });
+};
 
   return (
     <div className="row m-auto">
