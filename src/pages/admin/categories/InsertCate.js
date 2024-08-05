@@ -105,10 +105,62 @@ function InsertCate() {
               </div>
             </form>
           </div>
+          <div className="card-body">
+            <div className="table-responsive pt-3">
+              <table className="table table-bordered text-center">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tên</th>
+                    <th>Hình ảnh</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems.map((item, index) => (
+                    <tr key={item.id}>
+                      <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                      <td>{item.name}</td>
+                      <td>
+                        <img
+                          src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${encodeURIComponent(
+                            item.images
+                          )}?alt=media`}
+                          width="80px"
+                          height="80px"
+                          alt=""
+                          className="rounded-circle"
+                        />
+                      </td>
+                      <td className="text-center">
+                        <button
+                          className="btn btn-outline-success mx-2"
+                          onClick={() => handleEdit(item.id)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                          className="btn btn-outline-danger mx-2"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          <i className="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <Pagination 
+                currentPage={currentPage} 
+                totalPages={Math.ceil(totalItems / itemsPerPage)} 
+                onPageChange={setCurrentPage} 
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default InsertCate;
+export default ListCate;

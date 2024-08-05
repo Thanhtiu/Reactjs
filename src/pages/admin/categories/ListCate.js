@@ -1,17 +1,23 @@
-// ListCate.js
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../firebase/axiosConfig";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../pagination/Pagination";
+import Search from "../search/Search";
 
 const ListCate = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axiosInstance.get("/api/categories");
+        const response = await axios.get("http://localhost:4200/api/categories");
         setData(response.data.data);
+        setFilteredData(response.data.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -27,8 +33,10 @@ const ListCate = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa thể loại này?")) {
       try {
-        await axiosInstance.delete(`/api/categories/${id}`);
-        setData(data.filter(item => item.id !== id));
+        await axios.delete(`http://localhost:4200/api/categories/${id}`);
+        const updatedData = data.filter((item) => item.id !== id);
+        setData(updatedData);
+        setFilteredData(updatedData);
         alert("Xóa thể loại thành công");
       } catch (error) {
         console.error("Error deleting category:", error);
@@ -37,30 +45,36 @@ const ListCate = () => {
     }
   };
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setCurrentPage(1);
+    const lowercasedTerm = term.toLowerCase();
+    const filtered = data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(lowercasedTerm) ||
+        item.images.toLowerCase().includes(lowercasedTerm)
+    );
+    setFilteredData(filtered);
+  };
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const currentItems = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="row m-auto">
       <div className="col-lg-12">
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
             Danh sách
-            <form action="">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Tìm kiếm"
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" type="button">
-                    <i className="bi bi-search"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
+            <Search onSearch={handleSearch} />
           </div>
           <div className="card-body">
             <div className="table-responsive pt-3">
-              <table className="table table-striped table-bordered text-center">
+              <table className="table table-bordered text-center">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -70,9 +84,9 @@ const ListCate = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item, index) => (
+                  {currentItems.map((item, index) => (
                     <tr key={item.id}>
-                      <td>{index + 1}</td>
+                      <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                       <td>{item.name}</td>
                       <td>
                         <img
@@ -87,13 +101,13 @@ const ListCate = () => {
                       </td>
                       <td className="text-center">
                         <button
-                          className="btn btn-success mx-2"
+                          className="btn btn-outline-success mx-2"
                           onClick={() => handleEdit(item.id)}
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
                         <button
-                          className="btn btn-danger mx-2"
+                          className="btn btn-outline-danger mx-2"
                           onClick={() => handleDelete(item.id)}
                         >
                           <i className="bi bi-trash"></i>
@@ -103,35 +117,11 @@ const ListCate = () => {
                   ))}
                 </tbody>
               </table>
-              <nav aria-label="Page navigation">
-                <ul className="pagination justify-content-center mt-3">
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
             </div>
           </div>
         </div>
