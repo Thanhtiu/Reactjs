@@ -5,8 +5,6 @@ import { DialogService } from "../../../services/common/DialogService";
 
 const CustomerList = () => {
   const [data, setData] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,25 +26,25 @@ const CustomerList = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axiosInstance.delete(`/api/customers/${id}`);
-      setData(data.filter(item => item.id !== id));
-      setSuccessMessage('Xóa khách hàng thành công !!!');
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 1000); 
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setErrorMessage('Khách hàng này không thể xóa.');
-      } else {
-        console.error('Error deleting customer:', error);
-        setErrorMessage('Đã xảy ra lỗi khi cố gắng xóa khách hàng.');
-      }
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 1000); 
+    const item = 'customers'; 
   
-    }
+    DialogService.showConfirmationDialog(item, id)
+      .then((confirmed) => {
+        if (confirmed) {
+          setData(data.filter(item => item.id !== id));
+          DialogService.success('Xóa khách hàng thành công !!!');
+        } else {
+          DialogService.error('Khách hàng này không thể xóa.');
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          DialogService.error('Khách hàng này không thể xóa.');
+        } else {
+          console.error('Error deleting customer:', error);
+          DialogService.error('Đã xảy ra lỗi khi cố gắng xóa khách hàng.');
+        }
+      });
   };
   
 
@@ -72,16 +70,6 @@ const CustomerList = () => {
             </form>
           </div>
           <div className="card-body">
-            {errorMessage && (
-              <div className="alert alert-danger" role="alert">
-                {errorMessage}
-              </div>
-            )}
-            {successMessage && (
-              <div className="alert alert-success" role="alert">
-                {successMessage}
-              </div>
-            )}
             <div className="table-responsive pt-3">
               <table className="table table-striped table-bordered text-center">
                 <thead>

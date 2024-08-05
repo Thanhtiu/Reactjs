@@ -4,18 +4,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../firebase/axiosConfig'; // Import axios configuration
 import { storage } from '../firebase/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { DialogService } from '../../../services/common/DialogService';
 
 function EditCustomer() {
     const { id } = useParams();
-    const { register, handleSubmit, formState: { errors }, reset, watch, setValue } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
     const navigate = useNavigate();
     const [file, setFile] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [imgUpload, setImgUpload] = useState('');
-    const [oldPassword, setOldPassword] = useState('');
     const [oldImage, setOldImage] = useState('');
-    const [successMessage, setSuccessMessage] = useState(''); 
-    const [errorMessage, setErrorMessage] = useState(''); 
+    const [oldPassword, setOldPassword] = useState(''); // New state to store old password
 
     useEffect(() => {
         const fetchCustomer = async () => {
@@ -27,14 +26,15 @@ function EditCustomer() {
                 setValue('email', customerData.email);
                 setValue('role', customerData.role);
                 setValue('gender', customerData.gender.toString());
-                setOldPassword(customerData.password); 
                 setOldImage(customerData.images); 
+                setOldPassword(customerData.password); // Set old password
                 if (customerData.images) {
                     const url = `https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${customerData.images}?alt=media&token=c6dc72e8-a1b0-41bb-b1f5-84f63f7397e9`;
                     setImgUpload(url);
                 }
             } catch (error) {
                 console.error('Error fetching customer:', error);
+                DialogService.error('Lỗi khi tải dữ liệu khách hàng.');
             }
         };
         fetchCustomer();
@@ -45,19 +45,16 @@ function EditCustomer() {
     };
 
     const onSubmit = async (data) => {
-        setErrorMessage(''); // Reset error message before submitting
-        setSuccessMessage(''); // Reset success message before submitting
-    
-        // Nếu có file, tiến hành tải ảnh mới lên Firebase
+        setIsUploading(true);
+        
         if (file) {
             const fileExtension = file.name.split('.').pop();
             const currentDate = new Date();
             const newFileName = `${currentDate.toISOString().replace(/[:.]/g, '-')}.${fileExtension}`;
             const path = `upload/${newFileName}`;
-    
+        
             const storageRef = ref(storage, path);
-            setIsUploading(true);
-    
+        
             try {
                 await uploadBytes(storageRef, file);
                 const url = await getDownloadURL(storageRef);
@@ -65,42 +62,41 @@ function EditCustomer() {
                 data.images = newFileName;
             } catch (error) {
                 console.error('Upload thất bại:', error);
-                setErrorMessage('Upload thất bại. Vui lòng thử lại.');
+                DialogService.error('Upload thất bại. Vui lòng thử lại.');
                 setIsUploading(false);
                 return;
             }
         } else {
             data.images = oldImage; // Giữ lại hình ảnh cũ nếu không có hình mới
         }
-    
+        
         data.isticket = 'active'; // Đặt giá trị mặc định
         data.date = new Date().toISOString(); // Thêm ngày hiện tại vào cột data
-    
-        // Xóa trường confirm_password trước khi gửi
-        delete data.confirm_password;
-    
+        
+        // Ensure password is not null if not provided by user
+        data.password = data.password || oldPassword; 
+        
+        console.log('Data to submit:', data); // Log dữ liệu gửi đến server
+        
         try {
-            // Gửi yêu cầu cập nhật đến backend
             const response = await axiosInstance.patch(`/api/customers/${id}`, data);
             if (response.status === 200) {
-                setSuccessMessage('Cập nhật khách hàng thành công'); 
+                DialogService.success('Cập nhật khách hàng thành công');
                 setTimeout(() => {
                     navigate("/admin/customers/list");
                 }, 1000);
             }
         } catch (error) {
+            console.error('Cập nhật thất bại:', error.response ? error.response.data : error.message);
             if (error.response && error.response.status === 400) {
-                setErrorMessage('Username hoặc email đã tồn tại.');
+                DialogService.error('Username hoặc email đã tồn tại.');
             } else {
-                console.error('Cập nhật thất bại:', error);
-                setErrorMessage('Cập nhật thất bại. Vui lòng thử lại.');
+                DialogService.error('Cập nhật thất bại. Vui lòng thử lại.');
             }
         } finally {
             setIsUploading(false);
         }
     };
-    
-    
     
 
     return (
@@ -110,8 +106,6 @@ function EditCustomer() {
                     <div className="card-header">Chỉnh sửa khách hàng</div>
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} 
-                        {successMessage && <div className="alert alert-success">{successMessage}</div>}
                             <div className="row">
                                 <div className="col-sm-8">
                                     <div className="row">
@@ -119,7 +113,7 @@ function EditCustomer() {
                                             <label htmlFor="username" className="fw-bold col-form-label">Tài Khoản</label>
                                             <input type="text"
                                                 className="form-control" id="username" placeholder="Tài khoản...." autoFocus
-                                                {...register('username', { required: 'Tài Khoản là bắt buộc' })} />
+                                                {...register('username', { required: 'Tài Khoản là bắt buộc' })} disabled/>
                                             {errors.username && <span className="text-danger">{errors.username.message}</span>}
                                         </div>
                                         <div className="col-sm-6">
@@ -173,32 +167,14 @@ function EditCustomer() {
                                             {errors.gender && <span className="text-danger">{errors.gender.message}</span>}
                                         </div>
                                     </div>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <label htmlFor="password" className="fw-bold col-form-label">Mật khẩu</label>
-                                            <input type="password"
-                                                className="form-control" id="password" placeholder="Mật Khẩu..."
-                                                {...register('password')} />
-                                            {errors.password && <span className="text-danger">{errors.password.message}</span>}
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <label htmlFor="confirm_password" className="fw-bold col-form-label">Xác nhận mật khẩu</label>
-                                            <input type="password"
-                                                className="form-control" id="confirm_password" placeholder="Xác Nhận Mật Khẩu..."
-                                                {...register('confirm_password', {
-                                                    validate: value =>
-                                                        value === watch('password') || 'Mật khẩu xác nhận không khớp'
-                                                })} />
-                                            {errors.confirm_password && <span className="text-danger">{errors.confirm_password.message}</span>}
-                                        </div>
-                                    </div>
+                     
                                 </div>
                                 <div className="col-sm-4">
                                     <label htmlFor="img" className="fw-bold col-form-label">Hình ảnh</label>
                                     <input type="file"
                                         className="form-control" id="img" accept="image/*" name="image" onChange={onFileChange} />
                                     <img
-                                        style={{ width: 'auto', height: '280px' }}
+                                        style={{ width: 'auto', height: '200px' }}
                                         src={file ? URL.createObjectURL(file) : imgUpload}
                                         alt="Image preview"
                                         className="img-thumbnail mt-2"
