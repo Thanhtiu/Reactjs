@@ -1,40 +1,43 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate, Link } from "react-router-dom"; // Import useNavigate for redirection
 import { useAuth } from '../../../auth/AuthContext'; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { DialogService } from '../../../services/common/DialogService'
+import { DialogService } from '../../../services/common/DialogService';
+
 function Header() {
   const { logout } = useAuth();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate(); 
 
   const [isBellDropdownOpen, setIsBellDropdownOpen] = useState(false);
   const [isEnvelopeDropdownOpen, setIsEnvelopeDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
-  // Toggle function for each dropdown
+  const [userId, setUserId] = useState(null); 
+  const [customerInfo, setUserInfo] = useState([]);
+  
   const toggleBellDropdown = () => {
     setIsBellDropdownOpen(!isBellDropdownOpen);
-    // Close other dropdowns
+
     setIsEnvelopeDropdownOpen(false);
     setIsProfileDropdownOpen(false);
   };
 
   const toggleEnvelopeDropdown = () => {
     setIsEnvelopeDropdownOpen(!isEnvelopeDropdownOpen);
-    // Close other dropdowns
+  
     setIsBellDropdownOpen(false);
     setIsProfileDropdownOpen(false);
   };
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
-    // Close other dropdowns
+
     setIsBellDropdownOpen(false);
     setIsEnvelopeDropdownOpen(false);
   };
 
-  // Function to close all dropdowns
+
   const closeAllDropdowns = () => {
     setIsBellDropdownOpen(false);
     setIsEnvelopeDropdownOpen(false);
@@ -43,17 +46,36 @@ function Header() {
 
   const logOut = async () => {
     try {
-      DialogService.success('Đăng xuất thành công')
+      DialogService.success('Đăng xuất thành công');
       setTimeout(() => {
-       logout(); 
+        logout(); 
       }, 1500);
-    
-  
-      
     } catch (error) {
-      
+      console.error('Đăng xuất thất bại:', error);
     }
   };
+
+  React.useEffect(() => {
+    const info = localStorage.getItem('userInfo');
+
+    if (info) {
+      try {
+        const userInfoArray = JSON.parse(info);
+
+        if (Array.isArray(userInfoArray) && userInfoArray.length > 0) {
+          const userInfo = userInfoArray[0]; 
+          setUserId(userInfo.id);
+          setUserInfo(userInfo) 
+        } else {
+          console.error('Dữ liệu không đúng định dạng hoặc mảng trống');
+        }
+      } catch (error) {
+        console.error('Lỗi phân tích JSON:', error);
+      }
+    } else {
+      console.error('Không có thông tin lưu trữ');
+    }
+  }, []);
 
   return (
     <nav className="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
@@ -127,21 +149,21 @@ function Header() {
           >
             <img
               className="img-profile rounded-circle"
-              src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F2024-06-24T11%3A57%3A02.662Z.png?alt=media&token=ad47e197-8b3b-42c2-937e-5f8dc783be85"
+              src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${customerInfo.images}?alt=media&token=ad47e197-8b3b-42c2-937e-5f8dc783be85`}
               style={{ maxWidth: "60px" }}
               alt="profile"
             />
-            <span className="ml-2 d-none d-lg-inline text-white small">Admin</span>
+            <span className="ml-2 d-none d-lg-inline text-white small">{customerInfo.full_name}</span>
           </a>
           <div
             className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${
               isProfileDropdownOpen ? 'show' : ''
             }`}
           >
-            <a className="dropdown-item font-weight-bold" href="./infor.html">
+            <Link className="dropdown-item font-weight-bold" to={`/admin/info/${userId}`}>
               <i className="fas fa-user fa-sm fa-fw mr-2 text-info"></i>
               Thông tin
-            </a>
+            </Link>
             <div className="dropdown-divider"></div>
             <a
               className="dropdown-item font-weight-bold"

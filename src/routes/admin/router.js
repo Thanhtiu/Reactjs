@@ -21,6 +21,8 @@ import InsertPost from '../../pages/admin/post/InsertPost';
 import ListPost from '../../pages/admin/post/ListPost';
 
 import EditPost from '../../pages/admin/post/EditPost';
+import Info from '../../pages/admin/info/Info';
+
 const AppRouterAdmin = () => {
   return (
     <div id="wrapper">
@@ -41,6 +43,7 @@ const AppRouterAdmin = () => {
             <Route path="/insert/post" element={<InsertPost />} />
             <Route path="/list/post" element={<ListPost />} />
             <Route path="/edit/post/:id" element={<EditPost />} />
+            <Route path="/info/:id" element={< Info />} />
           </Routes>
       
         </div>

@@ -1,42 +1,83 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 
 function Home() {
-  const chartContainer = useRef(null); // Ref to hold the chart canvas
-
-  useEffect(() => {
-    const months = new Array(12).fill('').map((_, index) => `Tháng ${index + 1}`);
-    const lineChartData = {
-      labels: months, // Correctly assigning the months array to labels
-      datasets: [{
+  const chartContainer = useRef(null);
+  const [chartData, setChartData] = useState({
+    labels: new Array(12).fill('').map((_, index) => `Tháng ${index + 1}`),
+    datasets: [
+      {
         label: 'Bài đăng',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: new Array(12).fill(0), 
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         tension: 0.4,
       },
       {
         label: 'Số khách hàng',
-        data: [0, 5, 55, 55, 14, 14, 56],
+        data: new Array(12).fill(0), 
         borderColor: 'rgba(255, 99, 132, 1)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         tension: 0.4,
-      }]
-    };
+      },
+    ],
+  });
 
-    // Get canvas context
+  useEffect(() => {
+  
+    Promise.all([
+      fetch('http://localhost:4200/api/data_post'), 
+      fetch('http://localhost:4200/api/data_customers') 
+    ])
+    .then(([postsResponse, customersResponse]) => Promise.all([
+      postsResponse.json(),
+      customersResponse.json()
+    ]))
+    .then(([postsData, customersData]) => {
+      const months = new Array(12).fill('').map((_, index) => `Tháng ${index + 1}`);
+      const postCounts = new Array(12).fill(0);
+      const customerCounts = new Array(12).fill(0);
+
+      postsData.forEach(item => {
+        postCounts[item.month - 1] = item.post_count;
+      });
+
+  
+      customersData.forEach(item => {
+        customerCounts[item.month - 1] = item.customer_count; 
+      });
+
+      setChartData({
+        labels: months,
+        datasets: [
+          {
+            ...chartData.datasets[0],
+            data: postCounts,
+          },
+          {
+            ...chartData.datasets[1],
+            data: customerCounts,
+          },
+        ],
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }, []); 
+
+  useEffect(() => {
     const ctx = chartContainer.current.getContext('2d');
 
-    // Initialize chart
     const chart = new Chart(ctx, {
       type: 'line',
-      data: lineChartData,
+      data: chartData,
     });
 
     return () => {
-      chart.destroy(); // Clean up chart on component unmount
+      chart.destroy(); 
     };
-  }, []); // Empty dependency array ensures useEffect runs once
+  }, [chartData]);
 
   return (
     <div className="container-fluid" id="container-wrapper">
@@ -53,7 +94,7 @@ function Home() {
             <div className="card-body">
               <div className="row align-items-center">
                 <div className="col mr-2">
-                  <div className="text-xs font-weight-bold text-uppercase mb-1">Tổng sản phẩm</div>
+                  <div className="text-xs font-weight-bold text-uppercase mb-1">Tổng bài đăng</div>
                   <div className="h5 mb-0 font-weight-bold text-gray-800" id="count_products">0</div>
                   <div className="mt-2 mb-0 text-muted text-xs">
                     {/* Additional text if needed */}
@@ -72,7 +113,7 @@ function Home() {
             <div className="card-body">
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
-                  <div className="text-xs font-weight-bold text-uppercase mb-1">Tổng đơn đặt hàng</div>
+                  <div className="text-xs font-weight-bold text-uppercase mb-1">Tổng thể loại</div>
                   <div className="h5 mb-0 font-weight-bold text-gray-800" id="total-orders">0</div>
                   <div className="mt-2 mb-0 text-muted text-xs">
                     {/* Additional text if needed */}
