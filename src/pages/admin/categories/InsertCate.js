@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axiosInstance from "../firebase/axiosConfig";
 import { storage } from "../firebase/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { DialogService } from '../../../services/common/DialogService';
 
 function InsertCate() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -32,12 +33,12 @@ function InsertCate() {
 
         console.log('Data to be sent:', data);
         await axiosInstance.post('/api/categories', data);
-        alert('Thêm thể loại thành công');
+        DialogService.success('Thêm thể loại thành công');
         reset();
         setFile(null);
       } catch (error) {
         console.error('Upload failed:', error);
-        alert('Upload failed');
+        DialogService.error('Lỗi khi thêm thể loại.');
       } finally {
         setIsUploading(false);
       }

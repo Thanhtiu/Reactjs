@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axiosInstance from "../firebase/axiosConfig";
 import { storage } from "../firebase/firebase";
 import { ref, uploadBytes } from "firebase/storage";
+import { DialogService } from '../../../services/common/DialogService';
 
 function EditCate() {
   const { id } = useParams(); // Lấy ID từ URL
@@ -61,11 +62,11 @@ function EditCate() {
         images: imgName
       });
 
-      alert('Cập nhật thể loại thành công');
+      DialogService.success('Cập nhật thể loại thành công');
       navigate('/admin/cate/list');
     } catch (error) {
       console.error('Cập nhật thất bại:', error);
-      alert('Cập nhật thất bại');
+      DialogService.error('Lỗi khi sửa thể loại');
     } finally {
       setIsUploading(false);
     }
