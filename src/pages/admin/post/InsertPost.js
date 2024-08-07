@@ -6,15 +6,17 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { DialogService } from '../../../services/common/DialogService';
 
 function InsertPost() {
-    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [fileImg, setFileImg] = useState(null);
     const [fileAudio, setFileAudio] = useState(null);
     const [imgPreview, setImgPreview] = useState('');
     const [audioPreview, setAudioPreview] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
+        // Fetch categories
         const fetchCategories = async () => {
             try {
                 const response = await axiosInstance.get('/api/categories');
@@ -23,18 +25,41 @@ function InsertPost() {
                 console.error('Error fetching categories:', error);
             }
         };
+
         fetchCategories();
+
+        // Fetch user info from localStorage
+        const info = localStorage.getItem('userInfo');
+        if (info) {
+            try {
+                const userInfoArray = JSON.parse(info);
+                if (Array.isArray(userInfoArray) && userInfoArray.length > 0) {
+                    const userInfo = userInfoArray[0];
+                    setUserId(userInfo.id);
+                } else {
+                    console.error('Dữ liệu không đúng định dạng hoặc mảng trống');
+                }
+            } catch (error) {
+                console.error('Lỗi phân tích JSON:', error);
+            }
+        } else {
+            console.error('Không có thông tin lưu trữ');
+        }
     }, []);
+
     const onFileChange = (e) => {
         const { name, files } = e.target;
         if (files.length > 0) {
             if (name === 'images') {
                 setFileImg(files[0]);
+                setImgPreview(URL.createObjectURL(files[0]));
             } else if (name === 'audio') {
                 setFileAudio(files[0]);
+                setAudioPreview(URL.createObjectURL(files[0]));
             }
         }
     };
+
     const onSubmit = async (data) => {
         setIsUploading(true);
         try {
@@ -45,8 +70,6 @@ function InsertPost() {
                 const imgPath = `upload/${imgFileName}`;
                 const imgRef = ref(storage, imgPath);
                 await uploadBytes(imgRef, fileImg);
-                const imgUrl = await getDownloadURL(imgRef);
-
                 const imgFileNameFromUrl = imgPath.split('/').pop();
                 data.images = imgFileNameFromUrl;
             }
@@ -58,17 +81,16 @@ function InsertPost() {
                 const audioPath = `audio/${audioFileName}`;
                 const audioRef = ref(storage, audioPath);
                 await uploadBytes(audioRef, fileAudio);
-                const audioUrl = await getDownloadURL(audioRef);
-
                 const audioFileNameFromUrl = audioPath.split('/').pop();
                 data.audio = audioFileNameFromUrl;
             }
 
-            data.customers_id = 7;
+            data.customers_id = userId; // Use userId from localStorage
+
             delete data.confirm_password;
             console.log('Data to be sent:', data);
             await axiosInstance.post('/api/post', data);
-        DialogService.success('Thêm thành công')
+            DialogService.success('Thêm thành công');
             reset();
         } catch (error) {
             console.error('Upload failed:', error);

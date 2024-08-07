@@ -119,7 +119,7 @@ function Post() {
                         </div>
                     ))}
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center mt-3">
                     <button onClick={handleToggleClick} className="shadow rounded-5">
                         <span>{showAllPosts ? "Đóng lại" : "Xem tất cả"}</span>
                     </button>

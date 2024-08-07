@@ -6,13 +6,12 @@ import './login.css';
 
 const Login = () => {
   const { login } = useAuth();
-  const navigate = useNavigate(); // Get navigate from useNavigate hook
+  const navigate = useNavigate(); 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     try {
       await login(data);
-  
       navigate('/admin');
     } catch (error) {
     

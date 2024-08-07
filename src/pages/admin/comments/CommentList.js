@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./CommentList.css";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../spinner/Spinner";
 
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -42,7 +43,8 @@ function CommentList() {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading state
+    return <Spinner/>
+
   }
 
   if (error) {

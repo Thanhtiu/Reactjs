@@ -12,18 +12,20 @@ const CustomerList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
- 
+
+  const fetchCustomers = async () => {
+    try {
+      const response = await axiosInstance.get('/api/customers');
+      setData(response.data.data);
+      setFilteredData(response.data.data);
+    } catch (error) {
+      console.error('Error fetching customers:', error);
+      setErrorMessage('Error fetching customers');
+    }
+  };
+
   useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const response = await axiosInstance.get('/api/customers');
-        setData(response.data.data);
-        setFilteredData(response.data.data);
-      } catch (error) {
-        console.error('Error fetching customers:', error);
-        setErrorMessage('Error fetching customers');
-      }
-    };
+  
 
     fetchCustomers();
   }, []);
@@ -40,6 +42,7 @@ const CustomerList = () => {
         if (confirmed) {
           setData(data.filter(item => item.id !== id));
           DialogService.success('Xóa khách hàng thành công !!!');
+          fetchCustomers();
         } 
       })
       .catch((error) => {

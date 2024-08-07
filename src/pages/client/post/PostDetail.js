@@ -59,7 +59,7 @@ function CategoriesDetail() {
                                     <div className="custom-block-icon-wrap">
                                         <div className="custom-block-image-wrap custom-block-image-detail-page">
                                             <img
-                                                src={category.images}
+                                                src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.images}?alt=media`}
                                                 className="custom-block-image img-fluid"
                                                 alt=''
                                             />

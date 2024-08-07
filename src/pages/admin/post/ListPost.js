@@ -5,25 +5,29 @@ import Search from "../search/Search";
 import axiosInstance from "../firebase/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { DialogService } from "../../../services/common/DialogService";
-
+import Spinner from "../spinner/Spinner";
 function ListPost() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const fetchCustomers = async () => {
+    try {
+      const response = await axiosInstance.get("/api/post");
+      setData(response.data.data);
+      setFilteredData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+    } finally {
+      setLoading(false); // Set loading to false when the request is done
+    }
+  };
+
   const itemsPerPage = 5;
   useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const response = await axiosInstance.get("/api/post");
-        setData(response.data.data);
-        setFilteredData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching customers:", error);
-      }
-    };
-
+    
     fetchCustomers();
   }, []);
 
@@ -37,6 +41,7 @@ function ListPost() {
         if (confirmed) {
           setData(data.filter((item) => item.id !== id));
           DialogService.success("Xóa bài đăng thành công !!!");
+          fetchCustomers();
         } else {
         }
       })
@@ -67,6 +72,11 @@ function ListPost() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  if (loading) {
+    return <Spinner/>
+
+  }
   return (
     <div className="row m-auto">
       <div className="col-lg-12">

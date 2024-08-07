@@ -20,6 +20,7 @@ import '../../assets/client/styles/css/main.css'
 import '../../assets/client/styles/css/login.css'
 import '../../assets/client/styles/css/templatemo-pod-talk.css'
 
+
 const AppRouter = () => {
   return (
     <>
@@ -35,6 +36,7 @@ const AppRouter = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/categories/:id" element={<Categories />} />
        <Route path="/getId_post/:id" element={<CategoriesDetail />} />
+
        
         {/* Add more routes here */}
       </Routes>

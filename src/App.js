@@ -9,7 +9,8 @@ import { AuthProvider } from './auth/AuthContext';
 import OTPForm from './auth/OtpForm';
 import Emailer from './auth/Emailer';
 import ChangePassword from './auth/ChangePassword';
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import { AuthProviderClient } from './pages/client/login/AuthContext';
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
@@ -40,10 +41,14 @@ function App() {
               path="/admin/*"
               element={<ProtectedRoute element={<AppRouterAdmin />} />}
             />
-            <Route
-              path="/*"
-              element={<AppRouter />}
-            />
+                <Route
+            path="/*"
+            element={
+              <AuthProviderClient>
+                <AppRouter />
+              </AuthProviderClient>
+            }
+          />
           </Routes>
         </div>
       </BrowserRouter>

@@ -1,22 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { useAuthClient } from '../../../pages/client/login/AuthContext'; 
+import { DialogService } from '../../../services/common/DialogService';
 function Header() {
   const [categories, setCategories] = useState([]);
+  const { isLoggedIn, customer, logout } = useAuthClient();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCategories = async () => {
+      const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:4200/api/categories"); // Adjust URL if needed
-        setCategories(response.data.data); // Adjust based on your API response structure
+        const response = await axios.get("http://localhost:4200/api/categories"); 
+        setCategories(response.data.data); 
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
 
     fetchCategories();
-  }, []);
+  }, [isLoggedIn, customer]);
+
+  const handleLogout = () => {
+
+      DialogService.success('Đăng xuất thành công');
+      setTimeout(() => {
+        logout(); 
+        navigate('/login')
+      }, 1500);
+
+  };
 
   return (
     <nav className="navbar navbar-expand-lg">
@@ -73,14 +86,36 @@ function Header() {
           </ul>
 
           <div className="nav-item dropdown">
-            <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
-              id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fs-4 bi bi-person-circle"></i>
-            </Link>
-            <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-              <li><Link className="dropdown-item" to="/login">Đăng nhập</Link></li>
-              <li><Link className="dropdown-item" to="/register">Đăng ký</Link></li>
-            </ul>
+            {isLoggedIn ? (
+              <>
+                <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
+                  id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {customer && (
+                    <img
+                      className="img-profile rounded-circle"
+                      src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${customer[0].images}?alt=media`}
+                      style={{ maxWidth: "30px" }}
+                      alt="profile"
+                    />
+                  )}
+                </Link>
+                <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                  <li><Link className="dropdown-item" to="/account">{customer[0].username}</Link></li>
+                  <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
+                </ul>
+              </>
+            ) : (
+              <>
+                <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
+                  id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i className="fs-4 bi bi-person-circle"></i>
+                </Link>
+                <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                  <li><Link className="dropdown-item" to="/login">Đăng nhập</Link></li>
+                  <li><Link className="dropdown-item" to="/register">Đăng ký</Link></li>
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </div>

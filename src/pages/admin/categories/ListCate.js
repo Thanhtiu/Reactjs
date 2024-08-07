@@ -12,17 +12,17 @@ const ListCate = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
   const navigate = useNavigate();
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://localhost:4200/api/categories");
+      setData(response.data.data);
+      setFilteredData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("http://localhost:4200/api/categories");
-        setData(response.data.data);
-        setFilteredData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
 
     fetchCategories();
   }, []);
@@ -38,9 +38,8 @@ const ListCate = () => {
             if (confirmed) {
                 setData(data.filter(item => item.id !== id));
                 DialogService.success('Xóa thể loại thành công !!!');
-            } else {
-
-            }
+                fetchCategories();
+            } 
         })
         .catch((error) => {
             if (error.response && error.response.status === 400) {
