@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for redire
 import { useAuth } from '../../../auth/AuthContext'; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { DialogService } from '../../../services/common/DialogService'
+import { DialogService } from '../../../services/common/DialogService';
+import { Link } from "react-router-dom";
 function Header() {
   const { logout } = useAuth();
   const navigate = useNavigate(); // Initialize useNavigate hook
@@ -127,7 +128,7 @@ function Header() {
           >
             <img
               className="img-profile rounded-circle"
-              src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F2024-06-24T11%3A57%3A02.662Z.png?alt=media&token=ad47e197-8b3b-42c2-937e-5f8dc783be85"
+              src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Ficon.png?alt=media&token=a5846c3a-f685-4365-a3d7-9a1e8152f14e"
               style={{ maxWidth: "60px" }}
               alt="profile"
             />
@@ -138,10 +139,10 @@ function Header() {
               isProfileDropdownOpen ? 'show' : ''
             }`}
           >
-            <a className="dropdown-item font-weight-bold" href="./infor.html">
+            <Link className="dropdown-item font-weight-bold" to='/admin/infor/list'>
               <i className="fas fa-user fa-sm fa-fw mr-2 text-info"></i>
               Thông tin
-            </a>
+            </Link>
             <div className="dropdown-divider"></div>
             <a
               className="dropdown-item font-weight-bold"

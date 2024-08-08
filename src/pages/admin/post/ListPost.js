@@ -8,7 +8,7 @@ function ListPost() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchCustomers = async () => {
+        const fetchPost = async () => {
             try {
                 const response = await axiosInstance.get('/api/post');
                 setData(response.data.data);
@@ -16,8 +16,7 @@ function ListPost() {
                 console.error('Error fetching customers:', error);
             }
         };
-
-        fetchCustomers();
+        fetchPost();
     }, []);
 
     const handleEdit = (id) => {
@@ -30,9 +29,7 @@ function ListPost() {
                 if (confirmed) {
                     setData(data.filter(item => item.id !== id));
                     DialogService.success('Xóa bài đăng thành công !!!');
-                } else {
-
-                }
+                } 
             })
             .catch((error) => {
                 if (error.response && error.response.status === 400) {

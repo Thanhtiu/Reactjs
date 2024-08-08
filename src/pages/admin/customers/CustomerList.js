@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../firebase/axiosConfig'; 
+import axiosInstance from '../firebase/axiosConfig';
 import { DialogService } from "../../../services/common/DialogService";
 
 const CustomerList = () => {
@@ -21,6 +21,8 @@ const CustomerList = () => {
     };
 
     fetchCustomers();
+    // console.log('cc');
+
   }, []);
 
   const handleEdit = (id) => {
@@ -34,7 +36,7 @@ const CustomerList = () => {
       setSuccessMessage('Xóa khách hàng thành công !!!');
       setTimeout(() => {
         setSuccessMessage('');
-      }, 1000); 
+      }, 1000);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage('Khách hàng này không thể xóa.');
@@ -44,11 +46,11 @@ const CustomerList = () => {
       }
       setTimeout(() => {
         setErrorMessage('');
-      }, 1000); 
-  
+      }, 1000);
+
     }
   };
-  
+
 
   return (
     <div className="row m-auto">
