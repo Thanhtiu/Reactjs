@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation  } from 'react-router-dom';
 import Header from '../../layouts/client/component/Header';
 import Home from '../../pages/client/home/Home';
 import About from '../../pages/client/about/About';
@@ -16,18 +16,23 @@ import CategoriesDetail from '../../pages/client/post/PostDetail';
 import '../../assets/client/styles/css/bootstrap.min.css'
 import '../../assets/client/styles/css/bootstrap-icons.css'
 import '../../assets/client/styles/css/owl.theme.default.min.css'
+import '../../assets/client/styles/css/owl.carousel.min.css'
+
 import '../../assets/client/styles/css/main.css'
 import '../../assets/client/styles/css/login.css'
 import '../../assets/client/styles/css/templatemo-pod-talk.css'
+import ScrollToTop from '../../layouts/client/component/ScrollToTop';
+
 
 
 const AppRouter = () => {
+  const location = useLocation();
   return (
     <>
   <main>
       <Header />
 
-
+    <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -40,6 +45,7 @@ const AppRouter = () => {
        
         {/* Add more routes here */}
       </Routes>
+  
       </main>
       <Footer/>
     </>

@@ -1,39 +1,63 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './home.css';
-import monnuong from '../../../assets/client/styles/images/food/mon nuong.jpg';
-import xao from '../../../assets/client/styles/images/food/mon xao.jpg';
-import nuoc from '../../../assets/client/styles/images/food/mon nuoc.jpg';
-import elsa from '../../../assets/client/styles/images/profile/woman-posing-black-dress-medium-shot.jpg';
-import taylor from '../../../assets/client/styles/images/profile/smartboy.jpg';
-import william from '../../../assets/client/styles/images/profile/handsome-asian-man-listening-music-through-headphones.jpg';
-import verified from '../../../assets/client/styles/images/verified.png';
 import { Link } from 'react-router-dom';
 import Post from '../post/Post'
+import CategoriesHome from "../categories/CategoriesHome";
 
-function Home() {
-  
+  function Home() {
+    const [categories, setCategories] = useState([]);
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:4200/api/categories"); 
+        setCategories(response.data.data); 
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    useEffect(() => { 
+      $('.owl-carousel').owlCarousel({
+        center: true,
+        loop: true,
+        margin: 30,
+        autoplay: true,
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 2,
+          },
+          767: {
+            items: 3,
+          },
+          1200: {
+            items: 4,
+          }
+        }
+      });
+    }, []);
   return (
-    <div>
+    <>
+    
       <section className="hero-section">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 col-12">
               <div className="text-center mb-5 pb-2">
-                <h1 className="text-white">Foodcast Forum</h1>
+              <h1 className="text-white" style={{ fontSize: '58px', fontWeight: 'bold' }}>Foodcast Forum</h1>
+
 
                 <p className="text-white">Nghe nó ở khắp mọi nơi. Khám phá podcast yêu thích của bạn.</p>
 
-                <a href="#section_2" className="btn custom-btn smoothscroll mt-3">Bắt đầu nghe</a>
+            
               </div>
 
               <div className="owl-carousel owl-theme">
                 <div className="owl-carousel-info-wrap item">
-                  <img src="/styles/images/profile/chef-9.jpg" className="owl-carousel-image img-fluid" alt=""/>
+                  <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fchef-9.jpg?alt=media&token=7175dd11-65c5-4360-8fac-e8e43066aab5" className="owl-carousel-image img-fluid" alt=""/>
 
-                    <div className="owl-carousel-info">
+                    <div className="owl-carousel-info item">
                       <h4 className="mb-2">Gordon Ramsay
-                        <img src="/styles/images/verified.png" className="owl-carousel-verified-image img-fluid"
+                        <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fverified.png?alt=media&token=d2b88560-6930-47ad-90b1-7e29876d4d91" className="owl-carousel-verified-image img-fluid"
                           alt=""/>
 
                       </h4>
@@ -54,139 +78,137 @@ function Home() {
                       </ul>
                     </div>
                 </div>
-
                 <div className="owl-carousel-info-wrap item">
-                  <img src="/styles/images/profile/chef2.jpg" className="owl-carousel-image img-fluid" alt=""/>
+                  <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fchef2.jpg?alt=media&token=ebc63f98-8efb-4a8c-8eee-443059c646ea" className="owl-carousel-image img-fluid" alt=""/>
 
                     <div className="owl-carousel-info">
-                      <h4 className="mb-2">
-                        Dương Huy Khải
-                        <img src="/styles/images/verified.png" className="owl-carousel-verified-image img-fluid"
+                      <h4 className="mb-2">	Dương Huy Khải
+                        <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fverified.png?alt=media&token=d2b88560-6930-47ad-90b1-7e29876d4d91" className="owl-carousel-verified-image img-fluid"
                           alt=""/>
+
                       </h4>
 
                       <span className="badge">Đầu bếp</span>
+                
                     </div>
 
                     <div className="social-share">
                       <ul className="social-icon">
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-twitter"></a>
+                          <a href="#" className="social-icon-link bi-linkedin"></a>
                         </li>
 
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-facebook"></a>
+                          <a href="#" className="social-icon-link bi-whatsapp"></a>
                         </li>
                       </ul>
                     </div>
                 </div>
-
                 <div className="owl-carousel-info-wrap item">
-                  <img src="/styles/images/profile/chef-5.jpg" className="owl-carousel-image img-fluid" alt=""/>
+                  <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fchef-5.jpg?alt=media&token=6fbc7150-b9d6-43c8-8e1d-404956a82b7f" className="owl-carousel-image img-fluid" alt=""/>
 
                     <div className="owl-carousel-info">
-                      <h4 className="mb-2">
-                        Michelin
-                        <img src="/styles/images/verified.png" className="owl-carousel-verified-image img-fluid"
+                      <h4 className="mb-2">	Michelin
+                        <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fverified.png?alt=media&token=d2b88560-6930-47ad-90b1-7e29876d4d91" className="owl-carousel-verified-image img-fluid"
                           alt=""/>
+
                       </h4>
 
                       <span className="badge">Đầu bếp</span>
-
-                      <span className="badge">Quản lý</span>
+                    
                     </div>
 
                     <div className="social-share">
                       <ul className="social-icon">
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-twitter"></a>
+                          <a href="#" className="social-icon-link bi-linkedin"></a>
                         </li>
 
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-facebook"></a>
+                          <a href="#" className="social-icon-link bi-whatsapp"></a>
                         </li>
-
-
                       </ul>
                     </div>
                 </div>
-
                 <div className="owl-carousel-info-wrap item">
-                  <img src="/styles/images/profile/chef-6.jpg" className="owl-carousel-image img-fluid" alt=""/>
+                  <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fchef-6.jpg?alt=media&token=f5f5b1e9-5dc8-4fb4-803c-2889c5cc732c" className="owl-carousel-image img-fluid" alt=""/>
 
                     <div className="owl-carousel-info">
-                      <h4 className="mb-2">Lâm Hương</h4>
+                      <h4 className="mb-2">Lâm Hương
+                        <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fverified.png?alt=media&token=d2b88560-6930-47ad-90b1-7e29876d4d91" className="owl-carousel-verified-image img-fluid"
+                          alt=""/>
+
+                      </h4>
 
                       <span className="badge">Đầu bếp</span>
-
-
+                      
                     </div>
 
                     <div className="social-share">
                       <ul className="social-icon">
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-twitter"></a>
+                          <a href="#" className="social-icon-link bi-linkedin"></a>
                         </li>
 
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-facebook"></a>
+                          <a href="#" className="social-icon-link bi-whatsapp"></a>
                         </li>
-
                       </ul>
                     </div>
                 </div>
-
                 <div className="owl-carousel-info-wrap item">
-                  <img src="/styles/images/profile/chef-7.jpg" className="owl-carousel-image img-fluid" alt=""/>
+                  <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fchef-7.jpg?alt=media&token=af07251e-5a89-47b2-8f1e-8fb2736ce39d" className="owl-carousel-image img-fluid" alt=""/>
 
                     <div className="owl-carousel-info">
                       <h4 className="mb-2">Schuttrump
-                        <img src="/styles/images/verified.png" className="owl-carousel-verified-image img-fluid"
+                        <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fverified.png?alt=media&token=d2b88560-6930-47ad-90b1-7e29876d4d91" className="owl-carousel-verified-image img-fluid"
                           alt=""/>
+
                       </h4>
 
                       <span className="badge">Đầu bếp</span>
-                      <span className="badge">Chủ nhà hàng</span>
+                      <span className="badge">Ban giám khảo</span>
                     </div>
 
                     <div className="social-share">
                       <ul className="social-icon">
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-instagram"></a>
+                          <a href="#" className="social-icon-link bi-linkedin"></a>
                         </li>
 
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-youtube"></a>
+                          <a href="#" className="social-icon-link bi-whatsapp"></a>
                         </li>
                       </ul>
                     </div>
                 </div>
-
                 <div className="owl-carousel-info-wrap item">
-                  <img src="/styles/images/profile/chef-8.jpg" className="owl-carousel-image img-fluid" alt=""/>
+                  <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fchef-8.jpg?alt=media&token=9f34b6af-0a02-48f7-978a-6770e447e661" className="owl-carousel-image img-fluid" alt=""/>
 
                     <div className="owl-carousel-info">
-                      <h4 className="mb-2">
-                        Jack Lee
-                        <img src="/styles/images/verified.png" className="owl-carousel-verified-image img-fluid"
-                          alt=""/>
+                      <h4 className="mb-2">Jack Lee
+                      
+
                       </h4>
 
-                      <span className="badge">Chủ nhà hàng</span>
+                      <span className="badge">Đầu bếp</span>
+                      
                     </div>
 
                     <div className="social-share">
                       <ul className="social-icon">
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-instagram"></a>
+                          <a href="#" className="social-icon-link bi-linkedin"></a>
                         </li>
 
                         <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-youtube"></a>
+                          <a href="#" className="social-icon-link bi-whatsapp"></a>
                         </li>
                       </ul>
                     </div>
                 </div>
+
+        
               </div>
             </div>
           </div>
@@ -195,50 +217,9 @@ function Home() {
 
      {/* categories */}
      <Post />
-     
+     <CategoriesHome />
 
-    
-
-    {/* <section className="topics-section section-padding pb-0" id="section_3">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 col-12">
-            <div className="section-title-wrap mb-5">
-              <h4 className="section-title">Chủ đề</h4>
-            </div>
-          </div>
-
-          {categories.map((cate) => (
-            <div className="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0" key={cate.id}>
-              <div className="custom-block custom-block-overlay">
-                <a href={`/client/menu/product/${cate.id}`} className="custom-block-image-wrap">
-                  <img
-                    src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${cate.images}?alt=media&token=c6dc72e8-a1b0-41bb-b1f5-84f63f7397e9`}
-                    className="custom-block-image img-fluid"
-                    alt={cate.name}
-                  />
-                </a>
-                <div className="custom-block-info custom-block-overlay-info">
-                  <h5 className="mb-1">
-                    <a href={`/client/menu/product/${cate.id}`}>
-                      {cate.name}
-                    </a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          ))}
-          
-        </div>
-      </div>
-    </section> */}
-
-   
-
-    
-
-     
-    </div>
+    </>
   );
 }
 

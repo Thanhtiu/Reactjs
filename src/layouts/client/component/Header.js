@@ -32,7 +32,7 @@ function Header() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav className="navbar navbar-expand-lg" style={{position: 'fixed'}}>
       <div className="container">
         <Link className="navbar-brand me-lg-5 me-0" to="/">
           <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Ficon.png?alt=media&token=a5846c3a-f685-4365-a3d7-9a1e8152f14e" className="logo-image img-fluid" alt="templatemo pod talk" />
@@ -83,18 +83,18 @@ function Header() {
             <li className="nav-item">
               <Link className="nav-link" to="/contact">Liên hệ</Link>
             </li>
-          </ul>
+        
 
           <div className="nav-item dropdown">
             {isLoggedIn ? (
               <>
-                <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
+                <Link className="nav-link dropdown-toggle " to="#"
                   id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {customer && (
                     <img
                       className="img-profile rounded-circle"
                       src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${customer[0].images}?alt=media`}
-                      style={{ maxWidth: "30px" }}
+                    width={40} height={40}
                       alt="profile"
                     />
                   )}
@@ -106,7 +106,7 @@ function Header() {
               </>
             ) : (
               <>
-                <Link className="nav-link dropdown-toggle btn custom-btn custom-border-btn smoothscroll rounded-end-5 rounded-start-5" to="#"
+                <Link className="nav-link dropdown-toggle " to="#"
                   id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i className="fs-4 bi bi-person-circle"></i>
                 </Link>
@@ -117,6 +117,7 @@ function Header() {
               </>
             )}
           </div>
+          </ul>
         </div>
       </div>
     </nav>

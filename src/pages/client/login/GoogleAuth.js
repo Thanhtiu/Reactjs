@@ -38,9 +38,10 @@ function GoogleAuth({ onLogin }) {
     
       
       const response = await axios.post(`${API_BASE_URL}/api/check-mail`, { email });
-      const userExists = response.data.exists;
+      const userExists = response.data;
 
-      if (!userExists) {
+      
+      if (userExists) {
         await axios.post(`${API_BASE_URL}/api/customers`, {
           username: profile.getName(),
           email: profile.getEmail(),
