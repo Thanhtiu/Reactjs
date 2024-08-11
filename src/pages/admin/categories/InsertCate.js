@@ -16,36 +16,45 @@ function InsertCate() {
 
   const onSubmit = async (data) => {
     if (file) {
-      const fileExtension = file.name.split('.').pop();
-      const currentDate = new Date();
-      const newFileName = `${currentDate.toISOString().trim()}.${fileExtension}`;
-      const path = `upload/${newFileName}`;
+        const fileExtension = file.name.split(".").pop();
+        const currentDate = new Date();
+        const newFileName = `${currentDate.toISOString().replace(/[:.]/g, '-')}.${fileExtension}`;
+        const path = `upload/${newFileName}`;
+        const storageRef = ref(storage, path);
+        setIsUploading(true);
 
-      const storageRef = ref(storage, path);
-      setIsUploading(true);
+        try {
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
 
-      try {
-        await uploadBytes(storageRef, file);
-        // const url = await getDownloadURL(storageRef);
-        
-        // Chỉ lưu tên tệp vào cơ sở dữ liệu
-        data.images = newFileName;
+            const fileName = path.split('/').pop();
+            data.images = fileName;
 
-        console.log('Data to be sent:', data);
-        await axiosInstance.post('/api/categories', data);
-        DialogService.success('Thêm thể loại thành công');
-        reset();
-        setFile(null);
-      } catch (error) {
-        console.error('Upload failed:', error);
-        DialogService.error('Lỗi khi thêm thể loại.');
-      } finally {
-        setIsUploading(false);
-      }
+            const response = await axiosInstance.post("/api/categories", data);
+
+            if (response.status === 201) {
+                DialogService.success("Thêm thể loại thành công");
+                reset();
+                setFile(null);
+            } else {
+                DialogService.error("Lỗi khi thêm thể loại.");
+            }
+        } catch (error) {
+            console.error("Upload failed:", error);
+
+            if (error.response && error.response.status === 400) {
+                DialogService.error("Tên thể loại đã tồn tại");
+            } else {
+                DialogService.error("Lỗi khi thêm thể loại.");
+            }
+        } finally {
+            setIsUploading(false);
+        }
     } else {
-      alert('No file selected');
+        DialogService.error("Không được bỏ trống ảnh");
     }
-  };
+};
+
 
   return (
     <div className="row m-auto">
