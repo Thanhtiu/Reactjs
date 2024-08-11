@@ -24,7 +24,6 @@ import '../../assets/client/styles/css/templatemo-pod-talk.css'
 import ScrollToTop from '../../layouts/client/component/ScrollToTop';
 
 
-
 const AppRouter = () => {
   const location = useLocation();
   return (
