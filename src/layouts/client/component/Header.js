@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuthClient } from '../../../pages/client/login/AuthContext'; 
+import { useAuthClient } from '../../../pages/client/login/AuthContext';
 import { DialogService } from '../../../services/common/DialogService';
 function Header() {
   const [categories, setCategories] = useState([]);
@@ -9,10 +9,10 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-      const fetchCategories = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:4200/api/categories"); 
-        setCategories(response.data.data); 
+        const response = await axios.get("http://localhost:4200/api/categories");
+        setCategories(response.data.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -23,11 +23,11 @@ function Header() {
 
   const handleLogout = () => {
 
-      DialogService.success('Đăng xuất thành công');
-      setTimeout(() => {
-        logout(); 
-        navigate('/login')
-      }, 1500);
+    DialogService.success('Đăng xuất thành công');
+    setTimeout(() => {
+      logout();
+      navigate('/login')
+    }, 1500);
 
   };
 
@@ -100,7 +100,8 @@ function Header() {
                   )}
                 </Link>
                 <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                  <li><Link className="dropdown-item" to="/account">{customer[0].username}</Link></li>
+                  <li><Link className="dropdown-item" to={`/account/${customer[0].id}`}>Thông tin</Link></li>
+                  <li><Link className="dropdown-item" to={`/account/${customer[0].id}`}>{customer[0].username}</Link></li>
                   <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
                 </ul>
               </>

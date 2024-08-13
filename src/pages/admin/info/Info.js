@@ -111,8 +111,8 @@ const Info = () => {
                       <input
                         type="text"
                         className="form-control bg-transparent"
-                        id="information"
-                        name="information"
+                        id="email"
+                        name="email"
                         value={userInfo ? userInfo[0].email : 'Loading...'}
                       />
                       <span className="err text-danger"></span>
