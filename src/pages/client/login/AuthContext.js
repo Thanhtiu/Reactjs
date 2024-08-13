@@ -14,6 +14,7 @@ export const AuthProviderClient = ({ children }) => {
       setCustomer(JSON.parse(storedCustomer));
       setIsLoggedIn(true);
     }
+    
   }, []);
 
   const login =  async (customerData) => {
@@ -28,7 +29,11 @@ export const AuthProviderClient = ({ children }) => {
 
     
   };
-
+  const loginGoogle = (user) => {
+    setIsLoggedIn(true);
+    setCustomer(user)
+    return true
+  }
   const logout = () => {
     localStorage.removeItem('customer');
     localStorage.removeItem('userToken');
@@ -37,7 +42,7 @@ export const AuthProviderClient = ({ children }) => {
   };
 
   return (
-    <AuthContextClient.Provider value={{ isLoggedIn, customer, login, logout }}>
+    <AuthContextClient.Provider value={{ isLoggedIn, customer, login, logout, loginGoogle }}>
       {children}
     </AuthContextClient.Provider>
   );

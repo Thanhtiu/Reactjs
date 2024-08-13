@@ -79,7 +79,7 @@ function CategoriesDetail() {
                                         <p>{category.description }</p>
                                         <div className="mt-5">
                                         <audio className="w-100" controls loop
-                                                src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.audio}?alt=media&token=e56f877d-977a-4081-9d6e-4ad5e65c5b7e`}>
+                                                src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/audio%2F${category.audio}?alt=media&token=3a5d5036-9549-4a5f-9276-853532e74fa4`}>
                                             </audio>
                                         </div>
                                         <div className="profile-block profile-detail-block d-flex flex-wrap align-items-center mt-5">

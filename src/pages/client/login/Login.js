@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthClient } from "./AuthContext";
 import { DialogService } from "../../../services/common/DialogService";
 import GoogleAuth from "./GoogleAuth";
+import Facebook from "./Facebook";
 
 function Login() {
   const navigate = useNavigate();
@@ -127,7 +128,7 @@ function Login() {
               </form>
               <ul className="wrapper list-unstyled d-flex justify-content-center mt-4">
                 <li className="icon facebook me-3">
-                  <span className="tooltip">Facebook</span>
+                  {/* <span className="tooltip">Facebook</span>
                   <svg
                     viewBox="0 0 320 512"
                     height="1.5em"
@@ -135,7 +136,8 @@ function Login() {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-                  </svg>
+                  </svg> */}
+                  <Facebook />
                 </li>
                 <li className="icon instagram">
                   <span className="tooltip">Google</span>

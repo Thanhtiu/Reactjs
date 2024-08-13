@@ -19,7 +19,7 @@ function CommentList() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const response = await axios.get("http://localhost:4200/api/comment");
+        const response = await axios.get("http://localhost:4200/api/listcomments");
 
         // Ensure data is handled correctly
         if (response.data && Array.isArray(response.data.data)) {
