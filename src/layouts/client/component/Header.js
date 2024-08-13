@@ -5,6 +5,7 @@ import { useAuthClient } from '../../../pages/client/login/AuthContext';
 import { DialogService } from '../../../services/common/DialogService';
 import { gapi } from 'gapi-script';
 import Spinner from '../../../pages/client/Spinner/Spinner';
+import Search from '../../../pages/client/search/Search';
 const CLIENT_ID = "973247984258-riadtumd7jcati9d9g9ip47tuqfqdkhc.apps.googleusercontent.com";
 const API_KEY = "AIzaSyAp8wzduKw5P30-B0hUnGD1qiuuj73L8qs";
 
@@ -90,14 +91,7 @@ function Header() {
         </Link>
 
         <div className="custom-search">
-          <form action="/client/search" method="get" className="custom-form search-form flex-fill me-3" role="search">
-            <div className="input-group input-group-lg">
-              <input name="message" type="search" className="border-0 p-2 rounded-start" id="message" placeholder="Tìm Kiếm..." aria-label="Search" />
-              <button type="submit" className="input-group-text" id="submit">
-                <i className="bi bi-search"></i>
-              </button>
-            </div>
-          </form>
+         <Search/>
           <div className="dropdown list-inline bg-gradient rounded-3" id="searchSuggestions">
             <ul id="suggestionList" className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {/* Your dropdown content here */}
