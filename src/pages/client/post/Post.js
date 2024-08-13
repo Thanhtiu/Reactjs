@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css"; // Import CSS for Toastify
 
 function Post() {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(6); 
-  const [isExpanded, setIsExpanded] = useState(false); 
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const [isAudioVisible, setIsAudioVisible] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,6 +19,8 @@ function Post() {
   const [duration, setDuration] = useState(0);
   const [currentPostId, setCurrentPostId] = useState(null);
   const [viewUpdated, setViewUpdated] = useState(false);
+  const [sharesToday, setSharesToday] = useState([]);
+  const [customer_id, setCustomer] = useState(null);
 
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false);
@@ -29,6 +33,18 @@ function Post() {
       console.error("Error fetching posts:", error);
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/api/shares/today");
+        setSharesToday(response.data.data);
+      } catch (error) {
+        console.error("Error fetching shares today:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     fetchPost();
@@ -63,7 +79,10 @@ function Post() {
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(
+      2,
+      "0"
+    )}`;
   };
 
   const fetchAllPosts = async () => {
@@ -164,8 +183,82 @@ function Post() {
 
   const postsToDisplay = data.slice(0, visibleCount);
 
+  const handleShareClick = async (postId) => {
+    const customer = localStorage.getItem('customer');
+    setCustomer(JSON.parse(customer));
+    // console.log(customerId);
+    
+    try {
+      const response = await axios.post('http://localhost:4200/api/shares', {
+        post_id: postId,
+        customers_id: customer_id[0].id
+      });
+      console.log("Share count updated:", response.data);
+
+      // Hiển thị thông báo thành công
+      Toastify({
+        text: "Chia sẻ thành công!",
+        duration: 3000,
+        gravity: "bottom", // can be top or bottom
+        position: "right", // can be left, center or right
+        backgroundColor: "#4caf50", // green
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+      }).showToast();
+    } catch (error) {
+      console.error("Error updating share count:", error);
+
+      // Hiển thị thông báo lỗi
+      Toastify({
+        text: "Đã xảy ra lỗi khi chia sẻ.",
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        backgroundColor: "#f44336", // red
+        stopOnFocus: true,
+      }).showToast();
+    }
+  };
+
+  const handleFavouriteClick = async (postId) => {
+    const customer = localStorage.getItem('customer');
+    setCustomer(JSON.parse(customer));
+    // console.log(customer);
+    
+
+    try {
+      const response = await axios.post('http://localhost:4200/api/favourite', {
+        post_id: postId,
+        customers_id: customer_id[0].id
+      });
+      console.log("Favourite count updated:", response.data);
+
+      Toastify({
+        text: "Yêu thích thành công!",
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        backgroundColor: "#4caf50",
+        stopOnFocus: true,
+      }).showToast();
+    } catch (error) {
+      console.error("Error updating favourite count:", error);
+
+      Toastify({
+        text: "Đã xảy ra lỗi khi yêu thích.",
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        backgroundColor: "#f44336",
+        stopOnFocus: true,
+      }).showToast();
+    }
+  };
+
   return (
-    <section className="latest-podcast-section section-padding pb-0" id="section_2">
+    <section
+      className="latest-podcast-section section-padding pb-0"
+      id="section_2"
+    >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-12 col-12">
@@ -249,10 +342,25 @@ function Post() {
                     <p>{truncateText(post.description, 100)}</p>
                   </div>
                   <div className="d-flex flex-column ms-auto">
-                    <a href="#" className="badge ms-auto">
-                      <i className="bi bi-bookmark"></i>
+                    <a
+                      href="#"
+                      className="badge ms-auto"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleFavouriteClick(post.id);
+                      }}
+                    >
+                      <span>{post.total_favorites}</span>
+                      <i className="bi-heart"></i>
                     </a>
-                    <a href="#" className="badge ms-auto">
+                    <a
+                      href="#"
+                      className="badge ms-auto"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleShareClick(post.id);
+                      }}
+                    >
                       <i className="bi bi-share-fill"></i>
                     </a>
                   </div>
@@ -271,7 +379,10 @@ function Post() {
       </div>
 
       {isAudioVisible && (
-        <div className="audio-player" style={{ position: "fixed", bottom: 0, zIndex: 1000 }}>
+        <div
+          className="audio-player"
+          style={{ position: "fixed", bottom: 0, zIndex: 1000 }}
+        >
           <span className="text-white close-audio" onClick={handleCloseAudio}>
             <i className="bi bi-x"></i>
           </span>
