@@ -60,7 +60,7 @@ const ListCate = () => {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    setCurrentPage(1); // Reset to the first page after searching
+    setCurrentPage(1);
     const lowercasedTerm = term.toLowerCase();
     const filtered = data.filter(
       (item) =>
