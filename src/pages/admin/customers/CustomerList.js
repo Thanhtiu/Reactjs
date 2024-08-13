@@ -111,7 +111,8 @@ const CustomerList = () => {
                       <td className='align-middle text-center'>{item.full_name}</td>
                       <td className='align-middle text-center'>{item.email}</td>
                       <td className='align-middle text-center'>
-                        <button
+                    <div className="d-flex"> 
+                    <button
                           className="btn btn-success mx-2"
                           onClick={() => handleEdit(item.id)}
                         >
@@ -123,6 +124,8 @@ const CustomerList = () => {
                         >
                           <i className="bi bi-trash3"></i>
                         </button>
+                    </div>
+
                       </td>
                     </tr>
                   ))}

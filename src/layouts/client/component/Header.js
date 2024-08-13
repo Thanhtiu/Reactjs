@@ -52,7 +52,7 @@ function Header() {
     const user = JSON.parse(localStorage.getItem('customer'));
 
     if (token && user) {
-      loginGoogle(user)
+    
     } else {
       logout(); 
     }

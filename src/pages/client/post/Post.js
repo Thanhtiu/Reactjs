@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Toastify from "toastify-js";
-import "toastify-js/src/toastify.css"; // Import CSS for Toastify
+import "toastify-js/src/toastify.css"; 
 
 function Post() {
   const [data, setData] = useState([]);
@@ -209,7 +209,7 @@ function Post() {
 
       // Hiển thị thông báo lỗi
       Toastify({
-        text: "Đã xảy ra lỗi khi chia sẻ.",
+        text: "Vui lòng đăng nhập để chia sẻ",
         duration: 3000,
         gravity: "bottom",
         position: "right",
@@ -233,7 +233,7 @@ function Post() {
       console.log("Favourite count updated:", response.data);
 
       Toastify({
-        text: "Yêu thích thành công!",
+        text: "Lưu thành công!",
         duration: 3000,
         gravity: "bottom",
         position: "right",
@@ -244,7 +244,7 @@ function Post() {
       console.error("Error updating favourite count:", error);
 
       Toastify({
-        text: "Đã xảy ra lỗi khi yêu thích.",
+        text: "Đăng nhập để để lưu",
         duration: 3000,
         gravity: "bottom",
         position: "right",
@@ -308,7 +308,7 @@ function Post() {
                         <span>{post.total_favorites}</span>
                       </a>
                       <Link
-                        to={`/client/menu/post_details/${post.id}`}
+                        to={`/getId_post/${post.id}`}
                         className="bi-chat me-1"
                       >
                         <span>{post.total_comments}</span>
@@ -350,8 +350,8 @@ function Post() {
                         handleFavouriteClick(post.id);
                       }}
                     >
-                      <span>{post.total_favorites}</span>
-                      <i className="bi-heart"></i>
+                    
+                      <i class="bi bi-bookmark"></i>
                     </a>
                     <a
                       href="#"

@@ -32,7 +32,7 @@ export const AuthProviderClient = ({ children }) => {
   const loginGoogle = (user) => {
     setIsLoggedIn(true);
     setCustomer(user)
-    return true
+  
   }
   const logout = () => {
     localStorage.removeItem('customer');

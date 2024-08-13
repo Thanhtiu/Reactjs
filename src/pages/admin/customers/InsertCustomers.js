@@ -217,7 +217,7 @@ function InsertCustomers() {
                                     />
                                     <img
                                         style={{ width: 'auto', height: '280px' }}
-                                        src={file ? URL.createObjectURL(file) : "https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F1710475554435-linhpc06747-anh_dai_dien.jpg?alt=media&token=5262bcb7-bd00-4681-8cbd-92716c566d91"}
+                                        src={file ? URL.createObjectURL(file) : "https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Fanh_dai_dien.jpg?alt=media&token=47baed79-8714-4aef-9af3-c816c588a01e"}
                                         alt="Image preview"
                                         className="img-thumbnail mt-2"
                                     />
