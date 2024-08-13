@@ -25,13 +25,13 @@ function About(){
 
                             <p>Mục tiêu của chúng tôi là mang lại những khoảnh khắc thú vị và bổ ích cho thính giả, giúp bạn không chỉ học hỏi được những công thức nấu ăn ngon mà còn cảm nhận được niềm vui trong từng bữa ăn. Hãy cùng chúng tôi khám phá và tận hưởng thế giới ẩm thực phong phú qua từng tập podcast. Cảm ơn bạn đã đồng hành cùng chúng tôi!</p>
 
-                            <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Fabout2.jpg?alt=media&token=90436a0f-ac3e-407c-b854-5466bfea1a75" className="about-image mt-5 img-fluid" alt=""/>
+                
 
                             <div className="section-title-wrap mt-5 mb-4">
                                 <h4 className="section-title">Đội Ngũ Đầu Bếp</h4>
                             </div>
                             <p>Đội ngũ đầu bếp của chúng tôi gồm những người đam mê nấu ăn và có kinh nghiệm phong phú trong lĩnh vực ẩm thực. Họ luôn sẵn sàng chia sẻ những công thức nấu ăn độc đáo và mẹo vặt để giúp bạn tạo ra những bữa ăn tuyệt vời.</p>
-                            <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Fabou1.jpg?alt=media&token=18f9fd43-3073-40d7-b0ec-82d911c25adf" className="about-image mt-3 img-fluid" alt="Đội ngũ đầu bếp"></img>
+                            <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fdoi%20ngu%20dau%20bep.jpg?alt=media&token=3df077a4-e332-44e8-b0fb-bd7f28687c74" className="about-image mt-3 img-fluid" alt="Đội ngũ đầu bếp"></img>
 
                             <div className="section-title-wrap mt-5 mb-4">
                                 <h4 className="section-title">Món Ăn Ngon</h4>
@@ -39,10 +39,10 @@ function About(){
                             <p>Chúng tôi luôn tìm kiếm và thử nghiệm những món ăn mới, từ các món ăn truyền thống đến những món ăn hiện đại. Dưới đây là một số hình ảnh về các món ăn ngon mà chúng tôi đã giới thiệu trong podcast.</p>
                             <div className="row">
                                 <div className="col-lg-6 col-md-6 col-12">
-                                    <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F2024-06-23T13%3A34%3A52.516Z.jpg?alt=media&token=ad3c3962-1889-4043-82e3-979b534bbff5" className="about-image mt-3 img-fluid" alt="Món ăn ngon 1"></img>
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2F804611.jpg?alt=media&token=240ee391-a5f5-4a5b-bdbe-4e959ddcccd1" className="about-image mt-3 img-fluid" alt="Món ăn ngon 1"></img>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-12">
-                                    <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Fbanner.jpg?alt=media&token=b240275e-3783-4f57-bb5b-cfbb201d0335" className="about-image mt-3 img-fluid" alt="Món ăn ngon 2"></img>
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/images%2Fbanner%20con%202.jpg?alt=media&token=e684fbff-1cb6-4362-9750-3dd0dd86d658" className="about-image mt-3 img-fluid" alt="Món ăn ngon 2"></img>
                                 </div>
                             </div>
 

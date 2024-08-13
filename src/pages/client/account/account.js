@@ -62,7 +62,7 @@ function Account() {
       data.role = 'user';
       const response = await axiosInstance.patch(`/api/customers/${id}`, data);
       if (response.status === 200) {
-        DialogService.success('Cập nhật tài khoản thành');
+        DialogService.success('Cập nhật tài khoản thành công');
       }
     } catch (error) {
       console.error('Update failed:', error.response ? error.response.data : error.message);
