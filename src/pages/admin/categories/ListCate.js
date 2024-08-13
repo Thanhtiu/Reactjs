@@ -12,6 +12,7 @@ const ListCate = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
   const navigate = useNavigate();
+
   const fetchCategories = async () => {
     try {
       const response = await axios.get("http://localhost:4200/api/categories");
@@ -23,9 +24,15 @@ const ListCate = () => {
   };
 
   useEffect(() => {
-
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages); // Adjust currentPage if it exceeds total pages
+    }
+  }, [filteredData]);
 
   const handleEdit = (id) => {
     navigate(`/admin/cate/edit/${id}`);
@@ -49,11 +56,11 @@ const ListCate = () => {
                 DialogService.error('Đã xảy ra lỗi khi cố gắng xóa khách hàng.');
             }
         });
-};
+  };
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to the first page after searching
     const lowercasedTerm = term.toLowerCase();
     const filtered = data.filter(
       (item) =>
@@ -123,11 +130,15 @@ const ListCate = () => {
                   ))}
                 </tbody>
               </table>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-              />
+              {filteredData.length > 0 ? (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              ) : (
+                <p>No categories found.</p>
+              )}
             </div>
           </div>
         </div>

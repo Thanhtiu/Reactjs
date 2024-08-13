@@ -9,7 +9,7 @@ import Login from '../../pages/client/login/Login';
 import Register from '../../pages/client/register/Register';
 import Categories from '../../pages/client/categories/Categories';
 import CategoriesDetail from '../../pages/client/post/PostDetail';
-
+import SearchResults from '../../pages/client/search/SearchResult';
 
 
 
@@ -36,7 +36,7 @@ const AppRouter = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/categories/:id" element={<Categories />} />
        <Route path="/getId_post/:id" element={<CategoriesDetail />} />
-
+       <Route path="/post_search" element={<SearchResults />} /> 
        
         {/* Add more routes here */}
       </Routes>
