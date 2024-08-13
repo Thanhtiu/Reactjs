@@ -9,6 +9,7 @@ import Login from '../../pages/client/login/Login';
 import Register from '../../pages/client/register/Register';
 import Categories from '../../pages/client/categories/Categories';
 import CategoriesDetail from '../../pages/client/post/PostDetail';
+import Account from '../../pages/client/account/account';
 
 
 
@@ -38,6 +39,7 @@ const AppRouter = () => {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/account/:id" element={<Account />}/>
         <Route path="/contact" element={<Contact />} />
         <Route path="/categories/:id" element={<Categories />} />
        <Route path="/getId_post/:id" element={<CategoriesDetail />} />

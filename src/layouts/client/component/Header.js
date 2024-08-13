@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuthClient } from '../../../pages/client/login/AuthContext'; 
+import { useAuthClient } from '../../../pages/client/login/AuthContext';
 import { DialogService } from '../../../services/common/DialogService';
 import { gapi } from 'gapi-script';
 import Spinner from '../../../pages/client/Spinner/Spinner';
@@ -150,7 +150,7 @@ function Header() {
                     )}
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                    <li><Link className="dropdown-item" to="/account">{customer[0]?.username}</Link></li>
+                    <li><Link className="dropdown-item" to={`/account/${customer[0].id}`}>{customer[0]?.username}</Link></li>
                     <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
                   </ul>
                 </>

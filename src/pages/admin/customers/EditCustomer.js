@@ -26,7 +26,7 @@ function EditCustomer() {
                 setValue('email', customerData.email);
                 setValue('role', customerData.role);
                 setValue('gender', customerData.gender.toString());
-                setOldImage(customerData.images); 
+                setOldImage(customerData.images);
                 setOldPassword(customerData.password); // Set old password
                 if (customerData.images) {
                     const url = `https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${customerData.images}?alt=media&token=c6dc72e8-a1b0-41bb-b1f5-84f63f7397e9`;
@@ -46,15 +46,15 @@ function EditCustomer() {
 
     const onSubmit = async (data) => {
         setIsUploading(true);
-        
+
         if (file) {
             const fileExtension = file.name.split('.').pop();
             const currentDate = new Date();
             const newFileName = `${currentDate.toISOString().replace(/[:.]/g, '-')}.${fileExtension}`;
             const path = `upload/${newFileName}`;
-        
+
             const storageRef = ref(storage, path);
-        
+
             try {
                 await uploadBytes(storageRef, file);
                 const url = await getDownloadURL(storageRef);
@@ -69,15 +69,15 @@ function EditCustomer() {
         } else {
             data.images = oldImage; // Giữ lại hình ảnh cũ nếu không có hình mới
         }
-        
+
         data.isticket = 'active'; // Đặt giá trị mặc định
         data.date = new Date().toISOString(); // Thêm ngày hiện tại vào cột data
-        
+
         // Ensure password is not null if not provided by user
-        data.password = data.password || oldPassword; 
-        
+        data.password = data.password || oldPassword;
+
         console.log('Data to submit:', data); // Log dữ liệu gửi đến server
-        
+
         try {
             const response = await axiosInstance.patch(`/api/customers/${id}`, data);
             if (response.status === 200) {
@@ -97,7 +97,7 @@ function EditCustomer() {
             setIsUploading(false);
         }
     };
-    
+
 
     return (
         <div className="row m-auto">
@@ -113,7 +113,7 @@ function EditCustomer() {
                                             <label htmlFor="username" className="fw-bold col-form-label">Tài Khoản</label>
                                             <input type="text"
                                                 className="form-control" id="username" placeholder="Tài khoản...." autoFocus
-                                                {...register('username', { required: 'Tài Khoản là bắt buộc' })} disabled/>
+                                                {...register('username', { required: 'Tài Khoản là bắt buộc' })} disabled />
                                             {errors.username && <span className="text-danger">{errors.username.message}</span>}
                                         </div>
                                         <div className="col-sm-6">
@@ -167,7 +167,7 @@ function EditCustomer() {
                                             {errors.gender && <span className="text-danger">{errors.gender.message}</span>}
                                         </div>
                                     </div>
-                     
+
                                 </div>
                                 <div className="col-sm-4">
                                     <label htmlFor="img" className="fw-bold col-form-label">Hình ảnh</label>
