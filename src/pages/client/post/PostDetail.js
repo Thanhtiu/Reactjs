@@ -1,34 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Assuming you use axios for HTTP requests
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import CommentForm from '../comments/CommentForm';
+import CommentList from '../comments/CommentList';
 import './details.css';
+
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
 }
+
 function CategoriesDetail() {
-    const { id } = useParams(); // Get the id from URL parameters
+    const { id } = useParams();
     const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [comments, setComments] = useState([]);
+    const [userId, setUserId] = useState(null);
 
+    const fetchComments = async () => {
+        try {
+            const response = await axios.get('http://localhost:4200/api/comments', {
+                params: { postId: id }
+            });
+            setComments(response.data.data);
+        } catch (error) {
+            console.error("Error loading comments:", error);
+        }
+    };
+    
+    
     useEffect(() => {
         const fetchCategoryData = async () => {
             try {
                 const response = await axios.get(`http://localhost:4200/api/getId_post/${id}`);
-                const categoryData = response.data.data[0]; // Get the first item from the array
+                const categoryData = response.data.data[0];
                 setCategory(categoryData);
                 setLoading(false);
             } catch (error) {
-                console.error("Lỗi khi tải dữ liệu:", error);
-                setError('Có lỗi xảy ra khi tải dữ liệu');
+                console.error("Error loading data:", error);
+                setError('Error loading data');
                 setLoading(false);
             }
         };
 
         fetchCategoryData();
+        fetchComments();
     }, [id]);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('customer');
+        const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+        setUserId(parsedUser ? parsedUser[0].id : null);
+    }, []);
+
+    const handleCommentSubmit = async (newComment) => {
+        try {
+            await axios.post('http://localhost:4200/api/comments', newComment);
+            fetchComments(); // Update comments after successful submission
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:4200/api/comments/${id}`);
+            fetchComments(); // Update comments after successful deletion
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
+    };
+
+    const handleReply = (commentId) => {
+        // Tìm bình luận tương ứng và chuyển đổi trạng thái reply form thành visible
+        setComments(comments.map(comment =>
+            comment.id === commentId ? { ...comment, showReplyForm: !comment.showReplyForm } : comment
+        ));
+    };
+    
+
+    const handleLike = async (commentId, userId, postId) => {
+        try {
+            await axios.post('http://localhost:4200/api/likes', { commentId, userId, postId });
+            // Cập nhật số lượng thích bình luận hoặc làm gì đó sau khi thích thành công
+        } catch (error) {
+            console.error("Error liking comment:", error);
+        }
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
@@ -71,25 +131,24 @@ function CategoriesDetail() {
                                     <div className="custom-block-info">
                                         <div className="custom-block-top d-flex mb-1">
                                             <small>
-                                            <i className="bi-clock-fill custom-icon"></i>
-                                            {formatDate(category.create_date)}
+                                                <i className="bi-clock-fill custom-icon"></i>
+                                                {formatDate(category.create_date)}
                                             </small>
                                         </div>
                                         <h2 className="mb-2">{category.title || 'No Title'}</h2>
-                                        <p>{category.description }</p>
+                                        <p>{category.description}</p>
                                         <div className="mt-5">
-                                        <audio className="w-100" controls loop
-                                                src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.audio}?alt=media&token=e56f877d-977a-4081-9d6e-4ad5e65c5b7e`}>
+                                            <audio className="w-100" controls loop
+                                                src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.audio}?alt=media`}>
                                             </audio>
                                         </div>
                                         <div className="profile-block profile-detail-block d-flex flex-wrap align-items-center mt-5">
                                             <div className="d-flex mb-3 mb-lg-0 mb-md-0">
-                                            <img
-                                                    src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.images_customers}?alt=media&token=3fcf238e-0058-40c0-b15d-5867d5586cf5`}
+                                                <img
+                                                    src={`https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F${category.images_customers}?alt=media`}
                                                     className="profile-block-image img-fluid" alt="" />
                                                 <p>
                                                     {category.username || 'No Author'}
-                                                    
                                                     <strong>Người đăng</strong>
                                                 </p>
                                             </div>
@@ -98,10 +157,10 @@ function CategoriesDetail() {
                                                     <a href="" className="social-icon-link bi-facebook"></a>
                                                 </li>
                                                 <li className="social-icon-item">
-                                                     <a href=""className="social-icon-link bi-instagram"></a>
+                                                    <a href="" className="social-icon-link bi-instagram"></a>
                                                 </li>
                                                 <li className="social-icon-item">
-                                                    <a href=""className="social-icon-link bi-whatsapp"></a>
+                                                    <a href="" className="social-icon-link bi-whatsapp"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -120,74 +179,24 @@ function CategoriesDetail() {
                             <h4 className="section-title">Bình luận của bạn</h4>
                         </div>
 
-                        {typeof userId === 'undefined' ? (
+                        {userId ? (
                             <div className="col-lg-7 col-7 mt-5">
-                                <form action="/client/comments" method="post" id="comment-form" name="comment-form" className="comment-form">
-                                    <div className="rating d-flex justify-content-center">
-                                        <input type="radio" id="star-1" name="rating" value="5" />
-                                        <label htmlFor="star-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                                            </svg>
-                                        </label>
-                                        <input type="radio" id="star-2" name="rating" value="4" />
-                                        <label htmlFor="star-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                                            </svg>
-                                        </label>
-                                        <input type="radio" id="star-3" name="rating" value="3" />
-                                        <label htmlFor="star-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                                            </svg>
-                                        </label>
-                                        <input type="radio" id="star-4" name="rating" value="2" />
-                                        <label htmlFor="star-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                                            </svg>
-                                        </label>
-                                        <input type="radio" id="star-5" name="rating" value="1" />
-                                        <label htmlFor="star-5">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                                            </svg>
-                                        </label>
-                                    </div>
-
-                                    <span className="error text-danger"></span> <br />
-                                    <input type="hidden" name="product_id" />
-                                    <input type="hidden" name="user_id" />
-                                    <input type="hidden" name="date" />
-                                    <textarea name="contents" id="contents" className="form-control" rows="3" placeholder="Bình luận của bạn"></textarea> <br />
-                                    <span className="error text-danger"></span> <br /> <br />
-                                    <div className="d-flex justify-content-end">
-                                        <button className='shadow'>
-                                            <div className="svg-wrapper-1">
-                                                <div className="svg-wrapper">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                                        <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <span>Đăng</span>
-                                        </button>
-                                    </div>
-                                </form>
+                                <CommentForm customers_id={userId} postId={id} onSubmit={handleCommentSubmit} />
                             </div>
                         ) : (
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-lg-12 col-12 text-center mt-3">
-                                        <a href="/client/form/login" className="btn btn btn-outline-dark">Đăng nhập để bình luận</a>
-                                    </div>
-                                </div>
+                            <div className=" mt-5 text-center">
+                                <p>Đăng nhập để bình luận</p>
                             </div>
                         )}
 
-                        {/* Existing comments list code */}
+                        <CommentList 
+                            comments={comments} 
+                            onEdit={fetchComments} 
+                            onDelete={handleDelete} 
+                            onReply={handleReply} 
+                            onLike={handleLike} 
+                            userId={userId} 
+                        />
                     </div>
                 </div>
             </section>
