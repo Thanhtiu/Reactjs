@@ -6,7 +6,7 @@ function Menu() {
             {/* Sidebar Brand */}
             <Link to='/admin' className="sidebar-brand d-flex align-items-center justify-content-center" >
                 <div className="sidebar-brand-icon">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F2024-06-24T11%3A57%3A02.662Z.png?alt=media&token=ad47e197-8b3b-42c2-937e-5f8dc783be85" alt="LTShop Logo" />
+                    <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Ficon.png?alt=media&token=a5846c3a-f685-4365-a3d7-9a1e8152f14e" alt="LTShop Logo" />
                 </div>
                 <div className="sidebar-brand-text mx-3">ADMIN</div>
             </Link>

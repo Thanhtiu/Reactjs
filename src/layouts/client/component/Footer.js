@@ -64,7 +64,7 @@ function Footer({ userId, user, categories }) {
 
           <div className="col-lg-2 col-md-3 col-12">
             <Link className="navbar-brand" to="/">
-              <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2F2024-06-24T11%3A57%3A02.662Z.png?alt=media&token=ad47e197-8b3b-42c2-937e-5f8dc783be85" className="logo-image img-fluid" alt="templatemo pod talk" />
+              <img src="https://firebasestorage.googleapis.com/v0/b/podcast-ba34e.appspot.com/o/upload%2Ficon.png?alt=media&token=a5846c3a-f685-4365-a3d7-9a1e8152f14e" className="logo-image img-fluid" alt="templatemo pod talk" />
             </Link>
           </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link, useNavigate } from "react-router-dom";
 function Register() {
   return (
     <>
@@ -54,7 +54,7 @@ function Register() {
               </div>
               <div className="text-center mt-5">
                 <p className="text-white">
-                  Đăng nhập ngay! <a className="text-info" href="/login">Đăng nhập</a>
+                  Đăng nhập ngay! <Link className="text-info" to="/login">Đăng nhập</Link>
                 </p>
               </div>
             </form>
